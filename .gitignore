@@ -1,0 +1,42 @@
+# Environment variables - NEVER commit these!
+.env
+*.env
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build files
+dist/
+build/
+*.min.js
+*.min.css
+
+# Uploads
+uploads/
+*.zip
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Database dumps
+*.sql
+*.sqlite
+*.db
