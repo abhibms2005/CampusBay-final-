@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: campusbay-backend
+    env: node
+    root: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: FRONTEND_ORIGIN
+        value: '*'
