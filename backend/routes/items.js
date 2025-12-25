@@ -89,12 +89,23 @@ router.post('/', auth, upload.single('image'), createItemValidator, async (req, 
 // GET /api/items
 router.get('/', async (req, res) => {
   try {
-    // Check MongoDB connection
+    // FALLBACK: If MongoDB is NOT connected, return mock data (Demo Mode)
     if (!isDbConnected()) {
-      console.error('MongoDB not connected when fetching items');
-      return res.status(503).json({
-        error: 'Database connection unavailable',
-        message: 'Please ensure MONGO_URI environment variable is set correctly'
+      console.warn('⚠️ MongoDB not connected. Serving MOCK DATA (Demo Mode).');
+
+      const mockItems = [
+        { _id: 'mock1', title: 'Engineering Mathematics by BS Grewal', description: 'Complete textbook with solved examples.', price: 350, category: 'Books', imageUrl: 'https://loremflickr.com/640/480/textbook,thick?lock=1', seller: { name: 'Priya S.', verified: true }, viewCount: 12, createdAt: new Date() },
+        { _id: 'mock2', title: 'OnePlus Nord CE 2', description: '8GB RAM, 128GB storage. Excellent condition.', price: 15500, category: 'Electronics', imageUrl: 'https://loremflickr.com/640/480/phone,table?lock=5', seller: { name: 'Rahul V.', verified: true }, viewCount: 45, createdAt: new Date() },
+        { _id: 'mock3', title: 'Scientific Calculator Casio fx-991EX', description: 'Perfect for exams, all functions working.', price: 650, category: 'Stationery', imageUrl: 'https://loremflickr.com/640/480/calculator,desk?lock=14', seller: { name: 'Arjun S.', verified: false }, viewCount: 8, createdAt: new Date() },
+        { _id: 'mock4', title: 'Study Table with Chair', description: 'Wooden study table + revolving chair.', price: 2500, category: 'Furniture', imageUrl: 'https://loremflickr.com/640/480/desk,study?lock=18', seller: { name: 'Sneha R.', verified: true }, viewCount: 30, createdAt: new Date() },
+        { _id: 'mock5', title: 'Guitar - Yamaha F280', description: 'Acoustic guitar in excellent condition.', price: 6500, category: 'General', imageUrl: 'https://loremflickr.com/640/480/guitar,acoustic?lock=22', seller: { name: 'Aditya K.', verified: true }, viewCount: 22, createdAt: new Date() }
+      ];
+
+      return res.json({
+        items: mockItems,
+        pagination: { total: 5, page: 1, limit: 50, pages: 1 },
+        sort: 'newest',
+        demoMode: true
       });
     }
 

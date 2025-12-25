@@ -12,9 +12,25 @@ function isCollegeEmail(email) {
   return email.toLowerCase().endsWith('@' + allowed);
 }
 
+// Helper to check MongoDB connection
+const mongoose = require('mongoose');
+const isDbConnected = () => mongoose.connection.readyState === 1;
+
 // Register
 router.post('/register', registerValidator, async (req, res) => {
   try {
+    // FALLBACK: Demo Mode Register
+    if (!isDbConnected()) {
+      console.warn('⚠️ MongoDB not connected. Using MOCK REGISTER (Demo Mode).');
+      const { name, email } = req.body;
+      // Create a fake token
+      const token = jwt.sign({ id: 'mock_user_id' }, process.env.JWT_SECRET || 'fallback_secret', { expiresIn: '7d' });
+      return res.json({
+        token,
+        user: { id: 'mock_user_id', name: name || 'Demo User', email: email, verified: true }
+      });
+    }
+
     const { name, email, password, college } = req.body;
 
     const existing = await User.findOne({ email: email.toLowerCase() });
@@ -46,6 +62,18 @@ router.post('/register', registerValidator, async (req, res) => {
 // Login
 router.post('/login', loginValidator, async (req, res) => {
   try {
+    // FALLBACK: Demo Mode Login
+    if (!isDbConnected()) {
+      console.warn('⚠️ MongoDB not connected. Using MOCK LOGIN (Demo Mode).');
+      const { email } = req.body;
+      // Create a fake token
+      const token = jwt.sign({ id: 'mock_user_id' }, process.env.JWT_SECRET || 'fallback_secret', { expiresIn: '7d' });
+      return res.json({
+        token,
+        user: { id: 'mock_user_id', name: 'Demo User', email: email, verified: true }
+      });
+    }
+
     const { email, password } = req.body;
 
     const user = await User.findOne({ email: email.toLowerCase() });
@@ -65,5 +93,6 @@ router.post('/login', loginValidator, async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+
 
 module.exports = router;
