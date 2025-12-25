@@ -2,14 +2,14 @@ const express = require('express');
 const Message = require('../models/Message');
 const Item = require('../models/Item');
 const auth = require('../middleware/auth');
+const { sendMessageValidator } = require('../middleware/validators');
 
 const router = express.Router();
 
 // Send a message
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, sendMessageValidator, async (req, res) => {
   try {
     const { to, text, itemId } = req.body;
-    if (!to || !text) return res.status(400).json({ error: 'Missing fields' });
 
     // Optional: attach item context if provided
     let itemRef = null;

@@ -1,19 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CampusBay - Your Campus Marketplace</title>
+
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        /* --- Global & Theme --- */
+        /* ===================================
+           DESIGN SYSTEM FOUNDATION
+           =================================== */
+
         :root {
-            --primary-color: #FF9933; /* Saffron/Orange */
-            --secondary-color: #138808; /* Green */
-            --dark-color: #2c3e50;
-            --bg-color: #FFFBF5;
-            --card-bg: #ffffff;
-            --border-color: #e6e6e6;
+            /* Primary Colors - Indigo */
+            --primary-50: #EEF2FF;
+            --primary-100: #E0E7FF;
+            --primary-200: #C7D2FE;
+            --primary-300: #A5B4FC;
+            --primary-400: #818CF8;
+            --primary-500: #6366F1;
+            --primary-600: #4F46E5;
+            --primary-700: #4338CA;
+            --primary-800: #3730A3;
+            --primary-900: #312E81;
+
+            /* Accent Colors - Pink */
+            --accent-50: #FDF2F8;
+            --accent-100: #FCE7F3;
+            --accent-200: #FBCFE8;
+            --accent-300: #F9A8D4;
+            --accent-400: #F472B6;
+            --accent-500: #EC4899;
+            --accent-600: #DB2777;
+            --accent-700: #BE185D;
+            --accent-800: #9D174D;
+            --accent-900: #831843;
+
+            /* Semantic Colors */
+            --success-500: #10B981;
+            --success-600: #059669;
+            --warning-500: #F59E0B;
+            --error-500: #EF4444;
+
+            /* Neutral Grays */
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+
+            /* Background & Surface */
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --bg-tertiary: #F3F4F6;
+
+            /* Text Colors */
+            --text-primary: #111827;
+            --text-secondary: #6B7280;
+            --text-tertiary: #9CA3AF;
+
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+            /* Spacing Scale (8px base) */
+            --space-1: 0.25rem;
+            /* 4px */
+            --space-2: 0.5rem;
+            /* 8px */
+            --space-3: 0.75rem;
+            /* 12px */
+            --space-4: 1rem;
+            /* 16px */
+            --space-5: 1.25rem;
+            /* 20px */
+            --space-6: 1.5rem;
+            /* 24px */
+            --space-8: 2rem;
+            /* 32px */
+            --space-10: 2.5rem;
+            /* 40px */
+            --space-12: 3rem;
+            /* 48px */
+            --space-16: 4rem;
+            /* 64px */
+            --space-20: 5rem;
+            /* 80px */
+            --space-24: 6rem;
+            /* 96px */
+
+            /* Border Radius */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            --radius-full: 9999px;
         }
+
+        /* ===================================
+           BASE STYLES
+           =================================== */
 
         * {
             box-sizing: border-box;
@@ -21,535 +121,1104 @@
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--dark-color);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.6;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 1.5rem;
+            padding: 0 var(--space-6);
         }
 
-        /* --- Header --- */
+        /* ===================================
+           HEADER / NAVIGATION
+           =================================== */
+
         .header {
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 1.5rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--gray-200);
+            padding: var(--space-4) var(--space-6);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
             position: sticky;
             top: 0;
             z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            box-shadow: var(--shadow-md);
+            background-color: rgba(255, 255, 255, 0.95);
         }
 
         .header-logo {
             font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-600), var(--accent-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            transition: transform 0.2s ease;
+        }
+
+        .header-logo:hover {
+            transform: scale(1.02);
+        }
+
+        .header-logo::before {
+            content: "🎓";
+            font-size: 1.75rem;
+            filter: grayscale(0);
         }
 
         .header-nav a {
-            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: 0.9375rem;
             font-weight: 600;
-            padding: 0.6rem 1rem;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            margin-left: 0.5rem;
-            text-decoration: none;
-            transition: background-color 0.2s;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
+            padding: var(--space-3) var(--space-6);
+            border-radius: var(--radius-full);
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
             color: white;
-        }
-        .btn-primary:hover {
-            opacity: 0.9;
-        }
-        
-        /* Shared Button Style */
-        .cta-button {
-            font-size: 1.1rem;
-            font-weight: 600;
-            padding: 0.8rem 2rem;
-            border-radius: 30px; /* Pill shape */
             text-decoration: none;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            display: inline-block;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.4);
         }
 
-        /* --- Hero Section --- */
-        .hero {
-            background-color: var(--card-bg); /* Restored background */
-            text-align: center;
-            padding: 5rem 1.5rem 6rem 1.5rem;
-            border-bottom: 1px solid var(--border-color); /* Restored border */
-            color: var(--dark-color); /* Restored text color */
+        .header-nav a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px 0 rgba(79, 70, 229, 0.5);
         }
-        
+
+        .header-nav a:active {
+            transform: translateY(0);
+        }
+
+        /* ===================================
+           HERO SECTION
+           =================================== */
+
+        .hero {
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+            padding: var(--space-24) var(--space-6);
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Animated gradient background */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg,
+                    rgba(99, 102, 241, 0.9) 0%,
+                    rgba(236, 72, 153, 0.8) 50%,
+                    rgba(79, 70, 229, 0.9) 100%);
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        /* Decorative shapes */
+        .hero-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -50px;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            top: 40%;
+            right: -50px;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            33% {
+                transform: translate(30px, -30px) rotate(120deg);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) rotate(240deg);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-4);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-full);
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: var(--space-6);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
         .hero h1 {
-            font-size: 2.8rem;
-            color: var(--dark-color); /* Restored text color */
-            margin-bottom: 1rem;
-            line-height: 1.2;
+            font-size: 4rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: var(--space-6);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
         }
 
         .hero .highlight {
-            color: var(--primary-color);
-            display: inline-block; /* Keeps it from breaking weirdly */
+            background: linear-gradient(135deg, #FBBF24, #F59E0B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero p {
-            font-size: 1.1rem;
-            color: #555; /* Restored text color */
-            max-width: 600px;
-            margin: 0 auto 2rem auto;
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.95);
+            max-width: 700px;
+            margin: 0 auto var(--space-8) auto;
+            line-height: 1.7;
         }
 
-        .hero .cta-button {
-            background-color: var(--primary-color);
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 153, 51, 0.4);
-        }
-        .hero .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 153, 51, 0.5);
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-3);
+            background: white;
+            color: var(--primary-700);
+            padding: var(--space-4) var(--space-8);
+            border-radius: var(--radius-xl);
+            font-size: 1.125rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* --- Section Titles --- */
-        .section-title {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--dark-color);
+        .hero-cta:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-cta::after {
+            content: '→';
+            transition: transform 0.3s ease;
+        }
+
+        .hero-cta:hover::after {
+            transform: translateX(4px);
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-12);
+            margin-top: var(--space-12);
+        }
+
+        .hero-stat {
             text-align: center;
+        }
+
+        .hero-stat-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .hero-stat-label {
+            display: block;
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: var(--space-1);
+        }
+
+        /* ===================================
+           SECTION UTILITIES
+           =================================== */
+
+        .section {
+            padding: var(--space-24) 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto var(--space-16) auto;
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: var(--space-2) var(--space-4);
+            background: var(--primary-50);
+            color: var(--primary-700);
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: var(--radius-full);
+            margin-bottom: var(--space-4);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: var(--space-4);
+            letter-spacing: -0.02em;
         }
 
         .section-subtitle {
-            font-size: 1rem;
-            color: #777;
-            margin-bottom: 3rem;
-            text-align: center;
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
         }
 
-        /* --- "How it Works" Section --- */
+        /* ===================================
+           HOW IT WORKS SECTION
+           =================================== */
+
         .how-it-works {
-            padding: 5rem 0;
+            background: var(--bg-secondary);
         }
 
         .steps-container {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 2rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-8);
+            position: relative;
+        }
+
+        /* Connecting line between steps */
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            top: 60px;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-200), var(--accent-200));
+            z-index: 0;
         }
 
         .step-card {
-            background: var(--card-bg);
-            padding: 2rem;
+            position: relative;
+            background: var(--bg-primary);
+            padding: var(--space-8);
             text-align: center;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .step-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1;
         }
 
-        .step-icon {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
+        .step-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary-200);
         }
-        
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary-500), var(--accent-500));
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 800;
+            border-radius: var(--radius-full);
+            margin-bottom: var(--space-6);
+            box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
+        }
+
         .step-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: var(--space-3);
         }
 
         .step-card p {
-            font-size: 0.95rem;
-            color: #666;
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
 
-        /* --- "Featured Categories" Section --- */
+        /* ===================================
+           CATEGORIES SECTION
+           =================================== */
+
         .featured-categories {
-            padding: 0 0 5rem 0; /* Follows "How it Works" */
+            background: var(--bg-primary);
         }
 
         .category-grid {
             display: grid;
-            /* Fills space better, 5 columns on desktop, wraps on mobile */
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-6);
         }
 
         .category-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 1.5rem;
+            position: relative;
+            background: linear-gradient(135deg, var(--primary-50), var(--accent-50));
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8);
             text-align: center;
             text-decoration: none;
-            color: var(--dark-color);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .category-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-        }
-        .category-icon {
-            font-size: 2.5rem;
-            line-height: 1;
-            display: block;
-            margin-bottom: 0.75rem;
-        }
-        .category-card span {
-            font-weight: 600;
+            color: var(--gray-900);
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* --- "What is CampusBay?" Section --- */
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--primary-500), var(--accent-500));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .category-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .category-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-300);
+        }
+
+        .category-icon {
+            position: relative;
+            z-index: 1;
+            font-size: 3rem;
+            line-height: 1;
+            display: block;
+            margin-bottom: var(--space-4);
+            filter: grayscale(0.3);
+            transition: filter 0.3s ease;
+        }
+
+        .category-card:hover .category-icon {
+            filter: grayscale(0);
+        }
+
+        .category-card span {
+            position: relative;
+            z-index: 1;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* ===================================
+           WHAT IS CAMPUSBAY SECTION
+           =================================== */
+
         .what-is {
-            padding: 5rem 0;
-            background-color: var(--card-bg);
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-secondary);
         }
 
         .what-is-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            gap: var(--space-16);
             align-items: center;
         }
 
         .what-is-text h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.3;
-            text-align: left; /* Override helper class */
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: var(--space-6);
+            line-height: 1.2;
+            color: var(--gray-900);
+            letter-spacing: -0.02em;
         }
 
         .what-is-text p {
-            margin-bottom: 1rem;
-            color: #555;
+            margin-bottom: var(--space-5);
+            color: var(--text-secondary);
+            font-size: 1.0625rem;
+            line-height: 1.7;
         }
 
         .what-is-list {
             list-style: none;
             padding: 0;
+            margin-top: var(--space-8);
         }
 
         .what-is-list li {
-            font-weight: 600;
-            margin-bottom: 0.75rem;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
+            margin-bottom: var(--space-5);
+            padding: var(--space-4);
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            border-left: 4px solid var(--success-500);
+            transition: all 0.3s ease;
+        }
+
+        .what-is-list li:hover {
+            transform: translateX(8px);
+            box-shadow: var(--shadow-md);
         }
 
         .what-is-list li svg {
-            width: 20px;
-            height: 20px;
-            color: var(--secondary-color);
-            margin-right: 0.75rem;
-            flex-shrink: 0; /* Prevent icon from shrinking */
+            width: 24px;
+            height: 24px;
+            color: var(--success-600);
+            margin-right: var(--space-4);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .what-is-list li strong {
+            color: var(--gray-900);
+        }
+
+        .what-is-image {
+            position: relative;
         }
 
         .what-is-image img {
             width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-2xl);
+            transition: transform 0.3s ease;
         }
 
-        /* --- UPDATED: Final CTA Section --- */
-        .final-cta {
-            padding: 5rem 0;
+        .what-is-image:hover img {
+            transform: scale(1.02);
         }
-        
-        /* New box style */
+
+        /* Image decorative elements */
+        .what-is-image::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary-400), var(--accent-400));
+            border-radius: var(--radius-2xl);
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* ===================================
+           FINAL CTA SECTION
+           =================================== */
+
+        .final-cta {
+            background: var(--bg-primary);
+        }
+
         .cta-box {
-            background: var(--primary-color);
+            position: relative;
+            background: linear-gradient(135deg, var(--primary-600), var(--accent-600));
             text-align: center;
-            padding: 4rem 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: var(--space-20);
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-2xl);
+        }
+
+        /* Glassmorphism overlay */
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)" /></svg>');
+            opacity: 0.5;
+        }
+
+        .cta-box-content {
+            position: relative;
+            z-index: 1;
         }
 
         .cta-box h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: white; /* Text color inside box */
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: var(--space-4);
+            color: white;
+            letter-spacing: -0.02em;
         }
 
         .cta-box p {
-            font-size: 1.1rem;
-            color: #ffffffd9; /* Lighter white for subtitle */
-            margin: 0 auto 2rem auto;
-            max-width: 500px;
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.95);
+            margin: 0 auto var(--space-8) auto;
+            max-width: 600px;
+            line-height: 1.6;
         }
 
-        .cta-box .cta-button {
-            background-color: var(--card-bg); /* White button */
-            color: var(--primary-color); /* Orange text */
-            box-shadow: none; /* Remove orange shadow */
-        }
-        .cta-box .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Subtle shadow on hover */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-3);
+            background: white;
+            color: var(--primary-700);
+            padding: var(--space-5) var(--space-10);
+            border-radius: var(--radius-xl);
+            font-size: 1.125rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* --- Footer --- */
+        .cta-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta-button::after {
+            content: '→';
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover::after {
+            transform: translateX(4px);
+        }
+
+        /* ===================================
+           FOOTER
+           =================================== */
+
         .footer {
-            padding: 2.5rem 1.5rem;
-            background-color: var(--dark-color);
-            color: #f4f4f4;
+            background: var(--gray-900);
+            color: var(--gray-300);
+            padding: var(--space-16) 0 var(--space-8) 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: var(--space-12);
+            margin-bottom: var(--space-12);
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-400), var(--accent-400));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-4);
+        }
+
+        .footer-brand p {
+            color: var(--gray-400);
+            line-height: 1.7;
+            margin-bottom: var(--space-6);
+        }
+
+        .footer-section h4 {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--space-4);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: var(--space-3);
+        }
+
+        .footer-links a {
+            color: var(--gray-400);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-400);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--gray-800);
+            padding-top: var(--space-8);
             text-align: center;
         }
-        .footer-links {
-            margin-bottom: 1rem;
-        }
-        .footer-links a {
-            color: var(--primary-color);
-            margin: 0 0.75rem;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
-        .footer p {
-            font-size: 0.9rem;
-            color: #aaa;
+
+        .footer-bottom p {
+            color: var(--gray-500);
+            font-size: 0.875rem;
         }
 
-        /* --- Responsive Design --- */
-        @media (max-width: 900px) {
+        /* ===================================
+           RESPONSIVE DESIGN
+           =================================== */
+
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
             .what-is-content {
                 grid-template-columns: 1fr;
+                gap: var(--space-12);
             }
+
             .what-is-image {
-                grid-row: 1; /* Move image to top on mobile */
-                margin-bottom: 2rem;
+                order: -1;
             }
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            .what-is-text h2 {
-                text-align: center;
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
         @media (max-width: 768px) {
+            .hero {
+                padding: var(--space-16) var(--space-6);
+                min-height: 500px;
+            }
+
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+
+            .hero p {
+                font-size: 1.0625rem;
+            }
+
+            .hero-stats {
+                gap: var(--space-6);
+            }
+
+            .hero-stat-number {
+                font-size: 1.5rem;
+            }
+
             .steps-container {
                 grid-template-columns: 1fr;
+                gap: var(--space-6);
             }
-            .header-nav {
-                display: none; /* Simplify header on mobile */
+
+            .steps-container::before {
+                display: none;
             }
-            .hero {
-                padding: 4rem 1rem 5rem 1rem;
+
+            .section-title {
+                font-size: 2rem;
             }
-            .what-is-content {
-                gap: 2rem;
+
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-        }
-        
-        @media (max-width: 600px) {
-             .category-grid {
-                /* 2 columns on mobile */
-                grid-template-columns: 1fr 1fr;
-            }
-            .category-card {
-                padding: 1.2rem;
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: var(--space-8);
             }
         }
 
+        @media (max-width: 640px) {
+            .header-logo {
+                font-size: 1.25rem;
+            }
+
+            .header-nav a {
+                padding: var(--space-2) var(--space-4);
+                font-size: 0.875rem;
+            }
+
+            .container {
+                padding: 0 var(--space-4);
+            }
+        }
+
+        /* ===================================
+           SCROLL ANIMATIONS
+           =================================== */
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
-
 
 <body>
 
     <!-- ======================= HEADER ======================= -->
-    <header class="header">
+    <header class="header" id="header">
         <a href="index.html" class="header-logo">CampusBay</a>
-        
+
         <nav class="header-nav">
-            <!-- This button links to the marketplace page we built -->
-            <a href="marketplace.html" class="btn-primary">Explore Marketplace</a>
+            <a href="marketplace.html">Explore Marketplace</a>
         </nav>
     </header>
 
     <main>
         <!-- ======================= HERO SECTION ======================= -->
-<section class="hero" style="
-    position: relative;
-    background: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1600&q=80') 
-    no-repeat center center/cover;
-    text-align: center;
-    padding: 120px 20px;
-    border-radius: 15px;
-    overflow: hidden;
-    color: white;
-">
-    <!-- Overlay for better contrast -->
-    <div style="
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0.4);
-        z-index: 0;
-    "></div>
+        <section class="hero">
+            <div class="hero-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
 
-    <!-- Content -->
-    <div style="position: relative; z-index: 1;">
-        <h1 style="font-size: 3rem; margin-bottom: 25px; color: #ffffff; font-weight: 700;">
-            Buy, Sell, & Swap on <span class="highlight" style="color: orange;">Campus.</span>
-        </h1>
-        <p style="font-size: 1.3rem; max-width: 700px; margin: 0 auto 35px; color: #ffffff; line-height: 1.6;">
-            The official marketplace for your college. Find cheap textbooks, sell your old gadgets, and trade notes with verified students from your own campus.
-        </p>
-        <a href="marketplace.html" class="cta-button" style="
-            background-color: orange;
-            color: white;
-            padding: 14px 35px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-        ">
-            Explore Marketplace &rarr;
-        </a>
-    </div>
-</section>
-
-
-
-
-        <!-- ======================= HOW IT WORKS ======================= -->
-        <section class="how-it-works container">
-            <h2 class="section-title">How It Works</h2>
-            <p class="section-subtitle">Get started in just 3 simple steps.</p>
-            <div class="steps-container">
-                <div class="step-card">
-                    <div class="step-icon">&#128248;</div> <!-- Camera Emoji -->
-                    <h3>1. Post Your Item</h3>
-                    <p>Snap a photo of your textbook, drafter, or PS4 controller and list it in seconds. It's free!</p>
+            <div class="hero-content">
+                <div class="hero-badge">
+                    ✨ Trusted by 500+ Students at BMSCE
                 </div>
-                <div class="step-card">
-                    <div class="step-icon">&#128172;</div> <!-- Chat Emoji -->
-                    <h3>2. Chat Instantly</h3>
-                    <p>Chat directly with verified buyers and sellers on campus. No phone numbers, just instant messages.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-icon">&#129309;</div> <!-- Handshake Emoji -->
-                    <h3>3. Meet & Pay</h3>
-                    <p>Agree on a price and meet up safely at the library, canteen, or your hostel common room.</p>
+
+                <h1>
+                    Buy, Sell, & Swap on <span class="highlight">Campus.</span>
+                </h1>
+
+                <p>
+                    The official marketplace for your college. Find cheap textbooks, sell your old gadgets, and trade
+                    notes with verified students from your own campus.
+                </p>
+
+                <a href="marketplace.html" class="hero-cta">
+                    Explore Marketplace
+                </a>
+
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">500+</span>
+                        <span class="hero-stat-label">Active Students</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">1,200+</span>
+                        <span class="hero-stat-label">Items Listed</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">100%</span>
+                        <span class="hero-stat-label">Campus Verified</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- ======================= NEW: BROWSE CATEGORIES ======================= -->
-        <section class="featured-categories container">
-            <h2 class="section-title">Browse by Category</h2>
-            <div class="category-grid">
-                <a href="marketplace.html" class="category-card">
-                    <span class="category-icon">&#128218;</span> <!-- Books Emoji -->
-                    <span>Books</span>
-                </a>
-                <a href="marketplace.html" class="category-card">
-                    <span class="category-icon">&#128187;</span> <!-- Laptop Emoji -->
-                    <span>Electronics</span>
-                </a>
-                <a href="marketplace.html" class="category-card">
-                    <span class="category-icon">&#128085;</span> <!-- T-shirt Emoji -->
-                    <span>Fashion</span>
-                </a>
-                <!-- CORRECTED: Fixed the typo in the class attribute below -->
-                <a href="marketplace.html" class="category-card">
-                    <span class="category-icon">&#129681;</span> <!-- Chair Emoji -->
-                    <span>Furniture</span>
-                </a>
-                <a href="marketplace.html" class="category-card">
-                    <span class="category-icon">&#9999;&#65039;</span> <!-- Pen Emoji -->
-                    <span>Stationery</span>
-                </a>
+        <!-- ======================= HOW IT WORKS ======================= -->
+        <section class="section how-it-works">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge">Simple Process</span>
+                    <h2 class="section-title">How It Works</h2>
+                    <p class="section-subtitle">Get started in just 3 simple steps and start trading with your campus
+                        community.</p>
+                </div>
+
+                <div class="steps-container">
+                    <div class="step-card fade-in">
+                        <div class="step-number">1</div>
+                        <h3>Post Your Item</h3>
+                        <p>Snap a photo of your textbook, drafter, or PS4 controller and list it in seconds. It's
+                            completely free!</p>
+                    </div>
+
+                    <div class="step-card fade-in" style="animation-delay: 0.1s;">
+                        <div class="step-number">2</div>
+                        <h3>Chat Instantly</h3>
+                        <p>Chat directly with verified buyers and sellers on campus. No phone numbers, just instant
+                            messages.</p>
+                    </div>
+
+                    <div class="step-card fade-in" style="animation-delay: 0.2s;">
+                        <div class="step-number">3</div>
+                        <h3>Meet & Pay</h3>
+                        <p>Agree on a price and meet up safely at the library, canteen, or your hostel common room.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= BROWSE CATEGORIES ======================= -->
+        <section class="section featured-categories">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge">Popular Categories</span>
+                    <h2 class="section-title">Browse by Category</h2>
+                    <p class="section-subtitle">Find exactly what you need from books to electronics, all verified by
+                        your campus community.</p>
+                </div>
+
+                <div class="category-grid">
+                    <a href="marketplace.html" class="category-card fade-in">
+                        <span class="category-icon">📚</span>
+                        <span>Books</span>
+                    </a>
+                    <a href="marketplace.html" class="category-card fade-in" style="animation-delay: 0.1s;">
+                        <span class="category-icon">💻</span>
+                        <span>Electronics</span>
+                    </a>
+                    <a href="marketplace.html" class="category-card fade-in" style="animation-delay: 0.2s;">
+                        <span class="category-icon">👕</span>
+                        <span>Fashion</span>
+                    </a>
+                    <a href="marketplace.html" class="category-card fade-in" style="animation-delay: 0.3s;">
+                        <span class="category-icon">🪑</span>
+                        <span>Furniture</span>
+                    </a>
+                    <a href="marketplace.html" class="category-card fade-in" style="animation-delay: 0.4s;">
+                        <span class="category-icon">✏️</span>
+                        <span>Stationery</span>
+                    </a>
+                </div>
             </div>
         </section>
 
         <!-- ======================= WHAT IS CAMPUSBAY ======================= -->
-        <section class="what-is">
-            <div class="container what-is-content">
-                <div class="what-is-text">
-                    <!-- CORRECTED: Removed "section-title" class. This title is intentionally left-aligned. -->
-                    <h2>Your College, Your Marketplace</h2>
-                    <p>
-                        CampusBay is built exclusively for students like you. We cut out the hassle and risk of public marketplaces by ensuring everyone is a verified student from your own campus.
-                    </p>
-                    <p>
-                        From NBH to NGH, find exactly what you need from people you trust.
-                    </p>
-                    <ul class="what-is-list">
-                        <li>
-                            <!-- Inline SVG for checkmark -->
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                            </svg>
-                            <span><strong>Verified Students Only:</strong> No random sellers, only your campus mates.</span>
-                        </li>
-                        <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                            </svg>
-                            <span><strong>Save & Make Money:</strong> Get textbooks for 50% off or sell your old ones for cash.</span>
-                        </li>
-                        <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                            </svg>
-                            <span><strong>Eco-Friendly:</strong> Be sustainable! Reuse and recycle items within your campus.</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="what-is-image">
-                    <!-- Placeholder image that represents college life -->
-                    <img src="https://images.unsplash.com/photo-1553893304-448dd3e66fd1?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1738" alt="College students trading items">
+        <section class="section what-is">
+            <div class="container">
+                <div class="what-is-content">
+                    <div class="what-is-text">
+                        <h2>Your College, Your Marketplace</h2>
+                        <p>
+                            CampusBay is built exclusively for students like you. We cut out the hassle and risk of
+                            public marketplaces by ensuring everyone is a verified student from your own campus.
+                        </p>
+                        <p>
+                            From NBH to NGH, find exactly what you need from people you trust.
+                        </p>
+
+                        <ul class="what-is-list">
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span><strong>Verified Students Only:</strong> No random sellers, only your campus
+                                    mates.</span>
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span><strong>Save & Make Money:</strong> Get textbooks for 50% off or sell your old
+                                    ones for cash.</span>
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span><strong>Eco-Friendly:</strong> Be sustainable! Reuse and recycle items within your
+                                    campus.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="what-is-image">
+                        <img src="https://images.unsplash.com/photo-1553893304-448dd3e66fd1?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1738"
+                            alt="College students trading items">
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- ======================= UPDATED: FINAL CTA ======================= -->
-        <section classs="final-cta container">
-            <div class="cta-box">
-                <h2>Ready to find a great deal?</h2>
-                <p>From your seniors' notes to a second-hand mini-fridge, it's all here.</p>
-                <a href="marketplace.html" class="cta-button">Start Browsing &rarr;</a>
+        <!-- ======================= FINAL CTA ======================= -->
+        <section class="section final-cta">
+            <div class="container">
+                <div class="cta-box">
+                    <div class="cta-box-content">
+                        <h2>Ready to find a great deal?</h2>
+                        <p>From your seniors' notes to a second-hand mini-fridge, it's all here.</p>
+                        <a href="marketplace.html" class="cta-button">Start Browsing</a>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
     <!-- ======================= FOOTER ======================= -->
     <footer class="footer">
-        <div class="footer-links">
-            <a href="#">About</a>
-            <a href="#">Terms</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">How It Works</a>
-            <a href="#">Safety Tips</a>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>CampusBay</h3>
+                    <p>Your trusted campus marketplace. Made for students, by students.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Categories</a></li>
+                        <li><a href="#">Safety Tips</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Terms</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Guidelines</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 CampusBay. Made for students, by students.</p>
+            </div>
         </div>
-        <p>&copy; 2025 CampusBay. Made for students, by students.</p>
     </footer>
-<script src="app.js"></script>
+
+    <!-- ======================= JAVASCRIPT ======================= -->
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animations - Intersection Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+    <script src="app.js"></script>
 </body>
+
 </html>

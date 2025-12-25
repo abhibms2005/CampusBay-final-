@@ -4,17 +4,17 @@
  */
 
 // Get API base URL - use same origin or fallback to localhost:4000
-const API_BASE_URL = (function() {
+const API_BASE_URL = (function () {
   // Check if we're on same origin (e.g., localhost:4000)
   const protocol = window.location.protocol;
   const hostname = window.location.hostname;
   const port = window.location.port;
-  
+
   // If already on the right port, use same origin
   if (port === '4000' || port === '') {
     return `${protocol}//${hostname}${port ? ':' + port : ''}/api`;
   }
-  
+
   // Otherwise use localhost:4000
   return 'http://localhost:4000/api';
 })();
@@ -137,6 +137,8 @@ class CampusBayAPI {
     if (options.category) params.append('category', options.category);
     if (options.page) params.append('page', options.page);
     if (options.limit) params.append('limit', options.limit);
+    if (options.includeStatus) params.append('includeStatus', options.includeStatus);
+    if (options.sort) params.append('sort', options.sort);
 
     return this._fetch(`/items?${params.toString()}`, {
       method: 'GET'
@@ -191,14 +193,44 @@ class CampusBayAPI {
     });
   }
 
+  /**
+   * PUT /api/items/:id/mark-sold
+   * Mark item as SOLD (production endpoint)
+   */
+  async markItemSold(id) {
+    return this._fetch(`/items/${id}/mark-sold`, {
+      method: 'PUT'
+    });
+  }
+
+  /**
+   * PUT /api/items/:id/purchase
+   * Purchase item (buyer endpoint - no seller restriction)
+   */
+  async purchaseItem(id) {
+    return this._fetch(`/items/${id}/purchase`, {
+      method: 'PUT'
+    });
+  }
+
+  /**
+   * PUT /api/items/:id/mark-available
+   * Mark item as AVAILABLE (production endpoint)
+   */
+  async markItemAvailable(id) {
+    return this._fetch(`/items/${id}/mark-available`, {
+      method: 'PUT'
+    });
+  }
+
   // ==================== MESSAGES ENDPOINTS ====================
 
   /**
-   * GET /api/messages
+   * GET /api/messages/conversations
    * Get all messages for authenticated user
    */
   async getMessages() {
-    return this._fetch('/messages', {
+    return this._fetch('/messages/conversations', {
       method: 'GET'
     });
   }
@@ -217,10 +249,52 @@ class CampusBayAPI {
    * POST /api/messages
    * Send a message to another user
    */
-  async sendMessage(recipientId, itemId, text) {
+  async sendMessage(to, itemId, text) {
     return this._fetch('/messages', {
       method: 'POST',
-      body: JSON.stringify({ recipientId, itemId, text })
+      body: JSON.stringify({ to, itemId, text })
+    });
+  }
+
+  // ==================== WISHLIST ENDPOINTS ====================
+
+  /**
+   * GET /api/wishlist
+   * Get current user's wishlist
+   */
+  async getWishlist() {
+    return this._fetch('/wishlist', {
+      method: 'GET'
+    });
+  }
+
+  /**
+   * POST /api/wishlist/:itemId
+   * Add item to wishlist
+   */
+  async addToWishlist(itemId) {
+    return this._fetch(`/wishlist/${itemId}`, {
+      method: 'POST'
+    });
+  }
+
+  /**
+   * DELETE /api/wishlist/:itemId
+   * Remove item from wishlist
+   */
+  async removeFromWishlist(itemId) {
+    return this._fetch(`/wishlist/${itemId}`, {
+      method: 'DELETE'
+    });
+  }
+
+  /**
+   * GET /api/wishlist/check/:itemId
+   * Check if item is in wishlist
+   */
+  async isInWishlist(itemId) {
+    return this._fetch(`/wishlist/check/${itemId}`, {
+      method: 'GET'
     });
   }
 

@@ -7,6 +7,7 @@ const cors = require('cors');
 const authRoutes = require('./routes/auth');
 const itemRoutes = require('./routes/items');
 const messageRoutes = require('./routes/messages');
+const wishlistRoutes = require('./routes/wishlist');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/auth', authRoutes);
 app.use('/api/items', itemRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/api/wishlist', wishlistRoutes);
 
 // Basic health
 app.get('/api/ping', (req, res) => res.json({ ok: true, time: new Date() }));
@@ -34,14 +36,14 @@ app.get('/api/ping', (req, res) => res.json({ ok: true, time: new Date() }));
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true, useUnifiedTopology: true
 })
-.then(() => {
-  console.log('✅ MongoDB connected');
-})
-.catch(err => {
-  console.warn('⚠️  MongoDB connection failed:', err.message);
-  console.warn('⚠️  Server will start WITHOUT database functionality');
-  console.warn('⚠️  To fix: Update MONGO_URI in .env file with valid MongoDB connection string');
-});
+  .then(() => {
+    console.log('✅ MongoDB connected');
+  })
+  .catch(err => {
+    console.warn('⚠️  MongoDB connection failed:', err.message);
+    console.warn('⚠️  Server will start WITHOUT database functionality');
+    console.warn('⚠️  To fix: Update MONGO_URI in .env file with valid MongoDB connection string');
+  });
 
 // Start server regardless of MongoDB connection
 app.listen(PORT, () => {

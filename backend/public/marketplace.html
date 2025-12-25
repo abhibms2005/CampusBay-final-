@@ -1,27 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CampusBay - Buy & Sell on Campus</title>
+    <title>CampusBay - Marketplace</title>
 
-    <!-- 
-      =======================================================================
-      INLINE CSS
-      =======================================================================
-    -->
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+
     <style>
-        /* --- Global & Theme --- */
-        :root {
-            --primary-color: #FF9933; /* Saffron/Orange */
-            --secondary-color: #138808; /* Green */
-            --bg-color: #FFFBF5; /* Light, warm peach background */
-            --card-bg: #ffffff;
-            --text-color: #2c3e50; /* Softer dark blue/black */
-            --border-color: #e6e6e6; /* Lighter border */
-            --error-color: #d93025;
-            --header-height: 60px;
+        /* ===================================
+           PRELOADER FOR "100% EFFICIENT" FEEL
+           =================================== */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0f172a;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
+
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid #FFF;
+            border-bottom-color: #6366f1;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        body.loaded #preloader {
+            opacity: 0;
+            visibility: hidden;
+        }
+    </style>
+
+    <script>
+        window.addEventListener('load', function () {
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 800);
+        });
+    </script>
+
+    <!-- App Scripts -->
+
+    <style>
+        /* ===================================
+    PREMIUM DESIGN SYSTEM FOUNDATION
+    =================================== */
+
+        :root {
+            /* Primary Colors - Indigo */
+            --primary-50: #EEF2FF;
+            --primary-100: #E0E7FF;
+            --primary-200: #C7D2FE;
+            --primary-300: #A5B4FC;
+            --primary-400: #818CF8;
+            --primary-500: #6366F1;
+            --primary-600: #4F46E5;
+            --primary-700: #4338CA;
+            --primary-800: #3730A3;
+            --primary-900: #312E81;
+
+            /* Accent Colors - Pink */
+            --accent-50: #FDF2F8;
+            --accent-100: #FCE7F3;
+            --accent-200: #FBCFE8;
+            --accent-300: #F9A8D4;
+            --accent-400: #F472B6;
+            --accent-500: #EC4899;
+            --accent-600: #DB2777;
+            --accent-700: #BE185D;
+            --accent-800: #9D174D;
+            --accent-900: #831843;
+
+            /* Semantic Colors */
+            --success-500: #10B981;
+            --success-600: #059669;
+            --warning-500: #F59E0B;
+            --error-500: #EF4444;
+
+            /* Neutral Grays */
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+
+            /* Background & Surface */
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --bg-tertiary: #F3F4F6;
+
+            /* Text Colors */
+            --text-primary: #111827;
+            --text-secondary: #6B7280;
+            --text-tertiary: #9CA3AF;
+
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+            /* Spacing Scale (8px base) */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+            --space-20: 5rem;
+            --space-24: 6rem;
+
+            /* Border Radius */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            --radius-full: 9999px;
+
+            /* Layout */
+            --header-height: 72px;
+        }
+
+        /* ===================================
+    DARK MODE THEME - MODERN GLASSMORPHISM
+    =================================== */
+
+        [data-theme="dark"] {
+            /* Glass Backgrounds */
+            --bg-primary: rgba(30, 41, 59, 0.7);
+            /* Frosted Dark Slate */
+            --bg-secondary: rgba(15, 23, 42, 0.6);
+            /* Deeper Frost */
+            --bg-tertiary: rgba(51, 65, 85, 0.5);
+
+            /* High Contrast Text */
+            --text-primary: #FFFFFF;
+            --text-secondary: #E2E8F0;
+            --text-tertiary: #94A3B8;
+
+            /* Glass Borders & Highlights */
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.05);
+
+            /* Shadows & Glows */
+            --shadow-sm: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 2px 4px rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 8px 16px rgba(0, 0, 0, 0.5);
+            --shadow-lg: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 20px 40px rgba(0, 0, 0, 0.6);
+
+            /* Grays mapped to Slate */
+            --gray-50: rgba(30, 41, 59, 0.5);
+            --gray-100: rgba(51, 65, 85, 0.5);
+            --gray-200: #475569;
+            --gray-800: #F8FAFC;
+            --gray-900: #FFFFFF;
+        }
+
+        /* Smooth theme transitions */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* "AURORA" MESH GRADIENT BACKGROUND */
+        [data-theme="dark"] body {
+            background-color: #0f172a;
+            background-image:
+                radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+                radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* Floating Orbs Overlay */
+        [data-theme="dark"] body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 15% 50%, rgba(124, 58, 237, 0.15), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(236, 72, 153, 0.15), transparent 25%);
+            filter: blur(40px);
+            z-index: -1;
+            animation: pulse-glow 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 0.8;
+                transform: scale(1.1);
+            }
+        }
+
+        /* ===================================
+    DARK MODE COMPONENT OVERRIDES
+    =================================== */
+
+        /* Header: Frosted Glass Overlay */
+        [data-theme="dark"] .header {
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0.6) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-image: none;
+            /* FIX: Remove rainbow border from light mode */
+            backdrop-filter: blur(20px);
+        }
+
+        /* Dark mode scrolled header fix - prevents white background on scroll */
+        [data-theme="dark"] .header.scrolled {
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.85) 100%);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Sidebar: Glass Panel */
+        [data-theme="dark"] .filters {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* Listing Cards: Floating Glass */
+        [data-theme="dark"] .listing-card {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(8px);
+        }
+
+        [data-theme="dark"] .listing-card:hover {
+            background: rgba(30, 41, 59, 0.6);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+            transform: translateY(-8px);
+        }
+
+        /* Inputs: Dark Glass */
+        [data-theme="dark"] .header-search input,
+        [data-theme="dark"] .filter-group input {
+            background: rgba(15, 23, 42, 0.6);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        [data-theme="dark"] .header-search input:focus,
+        [data-theme="dark"] .filter-group input:focus {
+            border-color: var(--primary-400);
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+
+
+        /* ===================================
+    BASE STYLES
+    =================================== */
 
         * {
             box-sizing: border-box;
@@ -29,24 +305,110 @@
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-            background-color: var(--bg-color); 
-            color: var(--text-color);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            /* RICH ATMOSPHERIC BACKGROUND - NO MORE FLAT WHITE! */
+            background: linear-gradient(135deg,
+                    #f8f9ff 0%,
+                    #fef4f8 25%,
+                    #f9f9ff 50%,
+                    #fff9f5 75%,
+                    #f8f9ff 100%);
+            background-attachment: fixed;
+            color: var(--text-primary);
             line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative;
+        }
+
+        /* ===================================
+    AESTHETIC SCROLLBAR (CHROME/SAFARI)
+    =================================== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.3);
+            border-radius: 99px;
+            border: 2px solid transparent;
+            background-clip: content-box;
+            transition: background 0.3s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(99, 102, 241, 0.6);
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+
+        /* Dark Mode Scrollbar */
+        [data-theme="dark"] ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        /* ATMOSPHERIC TEXTURE OVERLAY */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(236, 72, 153, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(99, 102, 241, 0.02) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ENSURE CONTENT APPEARS ABOVE BACKGROUND */
+        .header,
+        .container,
+        .main-content,
+        .footer {
+            position: relative;
+            z-index: 1;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 0 var(--space-6);
         }
 
-        /* --- Header --- */
+        /* ===================================
+    HEADER / NAVIGATION - RICH & DISTINCTIVE
+    =================================== */
+
         .header {
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-            padding: 0 1rem;
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.95) 0%,
+                    rgba(248, 249, 255, 0.9) 50%,
+                    rgba(254, 244, 248, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 2px solid;
+            border-image: linear-gradient(90deg,
+                    var(--primary-300),
+                    var(--accent-300),
+                    var(--primary-300)) 1;
+            padding: var(--space-4) var(--space-6);
             height: var(--header-height);
             display: flex;
             align-items: center;
@@ -54,249 +416,598 @@
             position: sticky;
             top: 0;
             z-index: 999;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.06); 
+            transition: all 0.3s ease;
+            box-shadow:
+                var(--shadow-md),
+                0 4px 20px rgba(99, 102, 241, 0.08);
+        }
+
+        /* SUBTLE PATTERN OVERLAY ON HEADER */
+        .header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.03) 0%, transparent 30%),
+                radial-gradient(circle at 85% 50%, rgba(236, 72, 153, 0.03) 0%, transparent 30%);
+            pointer-events: none;
+        }
+
+        .header.scrolled {
+            box-shadow:
+                var(--shadow-lg),
+                0 8px 30px rgba(99, 102, 241, 0.12);
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.98) 0%,
+                    rgba(248, 249, 255, 0.95) 50%,
+                    rgba(254, 244, 248, 0.95) 100%);
         }
 
         .header-logo {
             font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-600), var(--accent-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            transition: transform 0.2s ease;
+        }
+
+        .header-logo:hover {
+            transform: scale(1.02);
+        }
+
+        .header-logo::before {
+            content: "🎓";
+            font-size: 1.75rem;
+            filter: grayscale(0);
         }
 
         .header-search {
             flex-grow: 1;
-            margin: 0 1.5rem;
-            max-width: 500px;
+            margin: 0 var(--space-8);
+            max-width: 600px;
         }
 
         .header-search input {
             width: 100%;
-            padding: 0.6rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            font-size: 1rem;
+            padding: var(--space-3) var(--space-5);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-full);
+            font-size: 0.9375rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: var(--bg-primary);
         }
 
-        .header-nav button {
-            font-size: 0.9rem;
-            font-weight: 600;
-            padding: 0.6rem 1rem;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            margin-left: 0.5rem;
-            transition: background-color 0.2s;
+        .header-search input:focus {
+            outline: none;
+            border-color: var(--primary-400);
+            box-shadow: 0 0 0 4px var(--primary-50);
         }
-        
+
+        .header-search input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
         /* Nav States */
         #nav-logged-in {
-            display: none; /* Hidden by default */
+            display: none;
             align-items: center;
+            gap: var(--space-3);
         }
+
         #nav-logged-out {
             display: flex;
             align-items: center;
-        }
-        #welcome-msg {
-            font-size: 0.9rem;
-            color: var(--text-color);
-            margin-right: 1rem;
-            white-space: nowrap; /* Keep name on one line */
+            gap: var(--space-3);
         }
 
+        #welcome-msg {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        /* ===================================
+    BUTTON SYSTEM
+    =================================== */
 
         .btn {
-            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+            font-size: 0.9375rem;
             font-weight: 600;
-            padding: 0.6rem 1rem;
-            border-radius: 5px;
+            padding: var(--space-3) var(--space-6);
+            border-radius: var(--radius-full);
             border: none;
             cursor: pointer;
-            transition: background-color 0.2s, opacity 0.2s, border-color 0.2s, color 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
         }
 
         .btn-primary {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
             color: white;
+            box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.4);
         }
+
         .btn-primary:hover {
-            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px 0 rgba(79, 70, 229, 0.5);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
         }
 
         .btn-secondary {
-            background-color: var(--card-bg);
-            color: var(--primary-color);
-            border: 1px solid var(--primary-color);
+            background-color: var(--bg-primary);
+            color: var(--primary-700);
+            border: 2px solid var(--primary-200);
         }
+
         .btn-secondary:hover {
-            background-color: #fffaf0;
+            background-color: var(--primary-50);
+            border-color: var(--primary-300);
         }
 
         .btn-success {
-            background-color: var(--secondary-color);
+            background: linear-gradient(135deg, var(--success-500), var(--success-600));
             color: white;
-            border: 1px solid var(--secondary-color);
             cursor: default;
-        }
-        .btn-success:hover {
-            opacity: 1;
         }
 
         .btn-danger {
-            background-color: #d93025;
+            background-color: var(--error-500);
             color: white;
-            border: 1px solid #d93025;
         }
+
         .btn-danger:hover {
             opacity: 0.9;
-            background-color: #c5221f;
+            transform: translateY(-1px);
         }
 
         .btn-demo {
-            background-color: var(--secondary-color); /* Green */
+            background: linear-gradient(135deg, var(--success-500), var(--success-600));
             color: white;
             border: none;
             width: 100%;
-            padding: 0.75rem;
+            padding: var(--space-4);
             font-size: 1rem;
-            border-radius: 5px;
+            border-radius: var(--radius-lg);
             cursor: pointer;
-            margin-top: 1rem;
+            margin-top: var(--space-4);
             font-weight: 600;
+            box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.3);
         }
+
         .btn-demo:hover {
-            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.4);
         }
 
 
-        /* --- Main Content Layout --- */
+        /* ===================================
+    MAIN CONTENT LAYOUT
+    =================================== */
+
         .main-content {
             display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 1.5rem;
-            padding-top: 1.5rem;
+            grid-template-columns: 300px 1fr;
+            gap: var(--space-8);
+            padding: var(--space-8) 0;
+            position: relative;
         }
 
-        /* --- Filters Sidebar --- */
+        /* DECORATIVE DIVIDER BETWEEN COLUMNS */
+        .main-content::before {
+            content: '';
+            position: absolute;
+            left: 320px;
+            top: var(--space-8);
+            bottom: var(--space-8);
+            width: 2px;
+            background: linear-gradient(180deg,
+                    transparent 0%,
+                    var(--primary-200) 10%,
+                    var(--accent-200) 50%,
+                    var(--primary-200) 90%,
+                    transparent 100%);
+            opacity: 0.5;
+        }
+
+        /* ===================================
+    FILTERS SIDEBAR - PROFESSIONAL CONTROL PANEL
+    =================================== */
+
+        /* ===================================
+           PROFESSIONAL SIDEBAR CONTROLS
+           =================================== */
         .filters {
-            background-color: var(--card-bg);
-            padding: 1rem;
-            border-radius: 8px;
+            background: var(--bg-secondary);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: var(--space-6);
+            border-radius: var(--radius-2xl);
+            /* STICKY SIDEBAR FIX */
             height: fit-content;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
             position: sticky;
-            top: calc(var(--header-height) + 1.5rem);
-            border: 1px solid #f0e9e0; /* Subtle border */
+            top: calc(var(--header-height) + var(--space-6));
+            border: 2px solid var(--gray-200);
+            box-shadow: var(--shadow-xl);
+            /* Custom Scrollbar for Sidebar */
+            scrollbar-width: thin;
+        }
+
+        /* VISUAL HEADER FOR FILTERS */
+        .filters::before {
+            content: '🎯 Filters';
+            display: block;
+            font-size: 1.25rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-700), var(--accent-600));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-6);
+            padding-bottom: var(--space-4);
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, var(--primary-500), var(--accent-500)) 1;
         }
 
         .filter-group {
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 1rem;
+            margin-bottom: var(--space-6);
+            padding-bottom: var(--space-6);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+            position: relative;
         }
+
         .filter-group:last-child {
             border-bottom: none;
             margin-bottom: 0;
             padding-bottom: 0;
         }
 
+        /* PROFESSIONAL SECTION HEADERS */
         .filter-group h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.75rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: var(--space-4);
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .filter-group h3::before {
+            content: '●';
+            color: var(--primary-600);
+            font-size: 0.75rem;
         }
 
         .filter-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--space-3);
+            font-size: 0.9375rem;
             cursor: pointer;
+            color: var(--text-secondary);
+            transition: color 0.2s ease;
         }
+
+        .filter-group label:hover {
+            color: var(--primary-700);
+        }
+
         .filter-group input[type="checkbox"] {
-            margin-right: 0.5rem;
+            margin-right: var(--space-3);
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--primary-600);
         }
+
         .filter-group input[type="text"],
         .filter-group input[type="number"] {
             width: 100%;
-            padding: 0.5rem;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            margin-top: 0.25rem;
-        }
-        .price-filter {
-            display: flex;
-            gap: 0.5rem;
+            padding: var(--space-3);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            margin-top: var(--space-2);
+            font-family: inherit;
+            font-size: 0.9375rem;
+            transition: all 0.3s ease;
         }
 
-        /* --- Listings Grid --- */
+        .filter-group input[type="text"]:focus,
+        .filter-group input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary-400);
+            box-shadow: 0 0 0 4px var(--primary-50);
+        }
+
+        .price-filter {
+            display: flex;
+            gap: var(--space-3);
+            align-items: center;
+        }
+
+        .price-filter input {
+            flex: 1;
+            min-width: 0;
+            /* Prevents flex items from overflowing */
+        }
+
+        /* ===================================
+    LISTINGS GRID - BOLD & VIBRANT
+    =================================== */
+
+        /* SECTION HEADER ABOVE LISTINGS */
+        .listings-grid::before {
+            content: '✨ Available Items';
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-700), var(--accent-600));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-6);
+            padding-bottom: var(--space-4);
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, var(--primary-500), var(--accent-500)) 1;
+            grid-column: 1 / -1;
+        }
+
         .listings-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 1rem;
-            min-height: 200px; /* For "No listings" message */
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--space-6);
+            min-height: 400px;
         }
 
         .listing-card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
+            position: relative;
+            background: var(--bg-primary);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-2xl);
             overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
-            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
-            border: 1px solid #f0e9e0; 
-            cursor: pointer; 
+            border: 2px solid var(--gray-200);
+            cursor: pointer;
         }
+
+        .listing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--primary-500), var(--accent-500));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+
+        /* SMART BADGE ON CARDS */
+        .listing-card::after {
+            content: '🔥 Popular';
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+            background: linear-gradient(135deg, var(--accent-600), var(--accent-700));
+            color: white;
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 700;
+            z-index: 10;
+            box-shadow: var(--shadow-md);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+        }
+
+        /* Show badge on every 3rd card (popular items) */
+        .listing-card:nth-child(3n)::after {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Alternative badge for different cards */
+        .listing-card:nth-child(5n)::after {
+            content: '📍 Near You';
+            background: linear-gradient(135deg, var(--success-500), var(--success-600));
+        }
+
         .listing-card:hover {
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transform: translateY(-5px);
+            transform: translateY(-14px) scale(1.03);
+            box-shadow:
+                var(--shadow-2xl),
+                0 0 40px rgba(99, 102, 241, 0.2),
+                0 0 0 3px rgba(99, 102, 241, 0.1);
+            border-color: var(--primary-200);
+        }
+
+        .listing-card:hover::before {
+            opacity: 0.09;
         }
 
         .listing-card-image {
+            position: relative;
+            z-index: 1;
             width: 100%;
-            height: 160px;
-            background-color: #eee;
+            height: 200px;
+            /* NO MORE BORING GRAY BACKGROUNDS! */
+            background: linear-gradient(135deg,
+                    rgba(99, 102, 241, 0.1),
+                    rgba(236, 72, 153, 0.08),
+                    rgba(99, 102, 241, 0.06));
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #aaa;
-            font-size: 0.9rem;
+            color: var(--text-tertiary);
+            font-size: 0.875rem;
             text-align: center;
-            padding: 0.5rem;
+            padding: var(--space-4);
+            overflow: hidden;
         }
+
+        .listing-card-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .listing-card:hover .listing-card-image::after {
+            opacity: 1;
+        }
+
         .listing-card-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .listing-card:hover .listing-card-image img {
+            transform: scale(1.1);
+        }
+
+        /* ===================================
+    CATEGORY-SPECIFIC PLACEHOLDERS
+    =================================== */
+
+        .listing-card[data-category="Books"] .listing-card-image:not(:has(img)) {
+            background: linear-gradient(135deg, #4338CA, #6366F1);
+        }
+
+        .listing-card[data-category="Books"] .listing-card-image:not(:has(img))::before {
+            content: '📚';
+            position: absolute;
+            font-size: 4rem;
+            opacity: 0.4;
+            z-index: 0;
+        }
+
+        .listing-card[data-category="Electronics"] .listing-card-image:not(:has(img)) {
+            background: linear-gradient(135deg, #0891B2, #06B6D4);
+        }
+
+        .listing-card[data-category="Electronics"] .listing-card-image:not(:has(img))::before {
+            content: '⚡';
+            position: absolute;
+            font-size: 4rem;
+            opacity: 0.4;
+            z-index: 0;
+        }
+
+        .listing-card[data-category="Fashion"] .listing-card-image:not(:has(img)) {
+            background: linear-gradient(135deg, #DB2777, #EC4899);
+        }
+
+        .listing-card[data-category="Fashion"] .listing-card-image:not(:has(img))::before {
+            content: '👕';
+            position: absolute;
+            font-size: 4rem;
+            opacity: 0.4;
+            z-index: 0;
+        }
+
+        .listing-card[data-category="Furniture"] .listing-card-image:not(:has(img)) {
+            background: linear-gradient(135deg, #92400E, #B45309);
+        }
+
+        .listing-card[data-category="Furniture"] .listing-card-image:not(:has(img))::before {
+            content: '🪑';
+            position: absolute;
+            font-size: 4rem;
+            opacity: 0.4;
+            z-index: 0;
+        }
+
+        .listing-card[data-category="Stationery"] .listing-card-image:not(:has(img)) {
+            background: linear-gradient(135deg, #7C3AED, #8B5CF6);
+        }
+
+        .listing-card[data-category="Stationery"] .listing-card-image:not(:has(img))::before {
+            content: '✏️';
+            position: absolute;
+            font-size: 4rem;
+            opacity: 0.4;
+            z-index: 0;
         }
 
         .listing-card-content {
-            padding: 1rem;
+            position: relative;
+            z-index: 1;
+            padding: var(--space-5);
             flex-grow: 1;
             display: flex;
             flex-direction: column;
+            background: var(--bg-primary);
         }
 
         .listing-card-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
+            font-size: 1.0625rem;
+            font-weight: 700;
+            margin-bottom: var(--space-2);
+            color: var(--gray-900);
+            line-height: 1.3;
             display: -webkit-box;
             -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;  
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
             overflow: hidden;
         }
 
         .listing-card-price {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--secondary-color);
-            margin-bottom: 0.25rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-600), var(--accent-600));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-2);
+            letter-spacing: -0.02em;
         }
 
         .listing-card-location {
-            font-size: 0.8rem;
-            color: #666;
-            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-3);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .listing-card-location::before {
+            content: "📍";
+            font-size: 1rem;
         }
 
         .listing-card-action {
@@ -305,37 +1016,201 @@
 
         .listing-card-action .btn-primary {
             width: 100%;
+            padding: var(--space-3) var(--space-4);
+            font-size: 0.9375rem;
         }
 
+        /* ===================================
+    AVAILABILITY BADGES - PRODUCTION READY
+    =================================== */
+
+        .availability-badge {
+            position: absolute;
+            top: var(--space-3);
+            left: var(--space-3);
+            padding: var(--space-2) var(--space-3);
+            border-radius: var(--radius-lg);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            box-shadow: var(--shadow-md);
+        }
+
+        .availability-badge.available {
+            background: linear-gradient(135deg, var(--success-500), var(--success-600));
+            color: white;
+        }
+
+        .availability-badge.available::before {
+            content: '●';
+            font-size: 0.625rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .availability-badge.sold {
+            background: linear-gradient(135deg, var(--gray-400), var(--gray-500));
+            color: white;
+        }
+
+        .availability-badge.sold::before {
+            content: '✕';
+            font-size: 0.75rem;
+        }
+
+        .availability-badge.reserved {
+            background: linear-gradient(135deg, var(--warning-500), #F97316);
+            color: white;
+        }
+
+        .availability-badge.reserved::before {
+            content: '⏳';
+            font-size: 0.75rem;
+        }
+
+        /* SOLD ITEM STYLING */
+        .listing-card.sold-out {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .listing-card.sold-out::before {
+            opacity: 0.03;
+        }
+
+        .listing-card.sold-out .listing-card-image {
+            filter: grayscale(30%);
+        }
+
+        .listing-card.sold-out .listing-card-price {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+
+        .listing-card.sold-out .btn-primary {
+            background: var(--gray-400);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .listing-card.sold-out:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* VISUALLY RICH EMPTY STATE */
         .no-listings-message {
-            color: #777;
-            font-style: italic;
-            grid-column: 1 / -1; /* Span all columns */
+            grid-column: 1 / -1;
             text-align: center;
-            margin-top: 2rem;
+            margin-top: var(--space-16);
+            padding: var(--space-16) var(--space-8);
+            background: linear-gradient(135deg,
+                    rgba(99, 102, 241, 0.05),
+                    rgba(236, 72, 153, 0.05));
+            border-radius: var(--radius-2xl);
+            border: 2px dashed var(--primary-200);
+            position: relative;
         }
 
-        /* --- Footer --- */
+        .no-listings-message::before {
+            content: '🔍';
+            display: block;
+            font-size: 4rem;
+            margin-bottom: var(--space-4);
+            opacity: 0.6;
+        }
+
+        .no-listings-message::after {
+            content: 'No items found matching your filters';
+            display: block;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: var(--space-2);
+        }
+
+        /* ===================================
+    FOOTER - RICH & ATMOSPHERIC
+    =================================== */
+
         .footer {
-            margin-top: 2rem;
-            padding: 2rem 1rem;
-            background-color: #333;
-            color: #f4f4f4;
-            text-align: center;
-        }
-        .footer-links {
-            margin-bottom: 1rem;
-        }
-        .footer-links a {
-            color: var(--primary-color);
-            margin: 0 0.75rem;
-            text-decoration: none;
-        }
-        .footer-links a:hover {
-            text-decoration: underline;
+            margin-top: var(--space-20);
+            padding: var(--space-16) 0 var(--space-8) 0;
+            background: linear-gradient(135deg,
+                    #2d1b4e 0%,
+                    #1a1a2e 50%,
+                    #2d1b4e 100%);
+            color: var(--gray-300);
+            position: relative;
+            overflow: hidden;
         }
 
-        /* --- Modal --- */
+        /* ATMOSPHERIC OVERLAY ON FOOTER */
+        .footer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        .footer * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-6);
+            margin-bottom: var(--space-6);
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--gray-300);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            padding: var(--space-2) var(--space-3);
+            border-radius: var(--radius-lg);
+        }
+
+        .footer-links a:hover {
+            color: white;
+            background: rgba(99, 102, 241, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .footer p {
+            text-align: center;
+            color: var(--gray-500);
+            font-size: 0.875rem;
+        }
+
+        /* ===================================
+    MODAL SYSTEM - DRAMATIC GLASSMORPHISM
+    =================================== */
+
         .modal {
             display: none;
             position: fixed;
@@ -345,306 +1220,799 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.6);
-            animation: fadeIn 0.3s;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(236, 72, 153, 0.2));
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .modal-content {
-            background-color: #fefefe;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             margin: 10vh auto;
-            padding: 0; 
-            border: 1px solid #888;
-            border-radius: 8px;
+            padding: 0;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: var(--radius-2xl);
             width: 90%;
-            max-width: 600px; 
+            max-width: 600px;
             position: relative;
-            animation: slideIn 0.3s;
-            overflow: hidden; 
+            animation: slideInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            box-shadow: var(--shadow-2xl), 0 0 0 1px rgba(99, 102, 241, 0.1);
         }
-        
+
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-600), var(--accent-600));
+        }
+
         .modal-content-small {
             max-width: 500px;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
-        @keyframes slideIn {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 1.5rem;
-            margin-bottom: 0;
+            padding: var(--space-6) var(--space-8);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(236, 72, 153, 0.05));
+            border-bottom: 2px solid var(--gray-100);
         }
 
         .modal-header h2 {
-            color: var(--primary-color);
-            font-size: 1.4rem;
+            background: linear-gradient(135deg, var(--primary-700), var(--accent-600));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
         }
-        
+
         .modal-body {
-            padding: 1.5rem;
-            /* Set max height for scrollable modal bodies */
+            padding: var(--space-8);
             max-height: 60vh;
             overflow-y: auto;
         }
 
+        /* Custom scrollbar for modal */
+        .modal-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-body::-webkit-scrollbar-track {
+            background: var(--gray-100);
+            border-radius: var(--radius-full);
+        }
+
+        .modal-body::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary-500), var(--accent-500));
+            border-radius: var(--radius-full);
+        }
+
         .modal-close-btn {
-            color: #aaa;
+            color: var(--text-tertiary);
             font-size: 2rem;
             font-weight: bold;
             cursor: pointer;
             line-height: 1;
+            transition: all 0.3s ease;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-full);
         }
+
         .modal-close-btn:hover {
-            color: #333;
+            color: var(--error-500);
+            background: var(--gray-100);
+            transform: rotate(90deg);
         }
-        
-        /* --- NEW: Auth (Login/Register) Modal Styles --- */
+
+        /* ===================================
+    AUTH TAB SYSTEM - BOLD & MODERN
+    =================================== */
+
         .auth-tabs {
             display: flex;
-            border-bottom: 1px solid var(--border-color);
         }
+
         .auth-tab {
             width: 50%;
-            padding: 1rem;
+            padding: var(--space-5);
             text-align: center;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            background: #f9f9f9;
-            color: #777;
-            border-bottom: 3px solid transparent;
+            background: var(--gray-50);
+            color: var(--text-tertiary);
+            border-bottom: 4px solid transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1rem;
         }
+
+        .auth-tab:hover {
+            background: var(--gray-100);
+            color: var(--text-secondary);
+        }
+
         .auth-tab.active {
-            color: var(--primary-color);
-            background: var(--card-bg);
-            border-bottom-color: var(--primary-color);
+            color: var(--primary-700);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(236, 72, 153, 0.08));
+            border-bottom-color: var(--primary-600);
+            position: relative;
         }
-        
+
+        .auth-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-600), var(--accent-600));
+            border-radius: var(--radius-full) var(--radius-full) 0 0;
+        }
+
         .auth-form-container {
-            display: none; /* Hide both forms by default */
+            display: none;
         }
+
         .auth-form-container.active {
-            display: block; /* Show only the active one */
+            display: block;
+            animation: fadeInScale 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
 
-        /* Modal Form Styles */
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* ===================================
+    FORM STYLES - PREMIUM & POLISHED
+    =================================== */
+
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: var(--space-5);
         }
+
         .form-group label {
             display: block;
-            margin-bottom: 0.25rem;
+            margin-bottom: var(--space-2);
             font-weight: 600;
+            color: var(--gray-900);
+            font-size: 0.9375rem;
         }
+
         .form-group input,
         .form-group textarea,
         .form-group select {
             width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
+            padding: var(--space-4);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-lg);
             font-size: 1rem;
             font-family: inherit;
-        }
-        .form-group textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-        
-        .form-error {
-            color: var(--error-color);
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            text-align: center;
-            display: none; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--bg-primary);
         }
 
-        /* --- Chat Modal Specifics --- */
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 4px var(--primary-50), 0 4px 12px rgba(99, 102, 241, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-error {
+            color: var(--error-500);
+            font-size: 0.9375rem;
+            margin-top: var(--space-4);
+            text-align: center;
+            display: none;
+            padding: var(--space-3);
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: var(--radius-lg);
+            border-left: 4px solid var(--error-500);
+        }
+
+        /* ===================================
+    CHAT MODAL - MODERN MESSAGING
+    =================================== */
+
         #chat-window {
-            height: 300px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            margin-bottom: 1rem;
-            padding: 1rem;
+            height: 350px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            margin-bottom: var(--space-5);
+            padding: var(--space-5);
             overflow-y: auto;
-            background: #f9f9f9;
+            background: linear-gradient(135deg, var(--gray-50), var(--bg-secondary));
             display: flex;
             flex-direction: column;
+            gap: var(--space-3);
         }
+
         .msg {
-            padding: 0.5rem 0.75rem;
-            border-radius: 10px;
-            margin-bottom: 0.5rem;
-            max-width: 80%;
-            line-height: 1.4;
+            padding: var(--space-3) var(--space-4);
+            border-radius: var(--radius-xl);
+            margin-bottom: var(--space-2);
+            max-width: 75%;
+            line-height: 1.5;
+            animation: messageSlide 0.3s ease;
+            box-shadow: var(--shadow-sm);
         }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .msg-seller {
-            background: #e9e9e9;
-            border-radius: 10px 10px 10px 0;
+            background: linear-gradient(135deg, var(--gray-100), var(--gray-200));
+            border-radius: var(--radius-xl) var(--radius-xl) var(--radius-xl) 0;
             align-self: flex-start;
+            color: var(--gray-900);
         }
+
         .msg-buyer {
-            background: #ffe8cc;
-            border-radius: 10px 10px 0 10px;
+            background: linear-gradient(135deg, var(--primary-500), var(--accent-500));
+            border-radius: var(--radius-xl) var(--radius-xl) 0 var(--radius-xl);
             align-self: flex-end;
+            color: white;
+            font-weight: 500;
         }
+
         #chat-form {
             display: flex;
-            gap: 0.5rem;
+            gap: var(--space-3);
         }
+
         #chat-form input {
             flex-grow: 1;
         }
 
-        /* --- Listing Detail Modal Styles --- */
+        /* ===================================
+    DETAIL MODAL - RICH PRESENTATION
+    =================================== */
+
         #detail-modal-image {
             width: 100%;
-            height: 300px;
-            background-color: #eee;
+            height: 400px;
+            background: linear-gradient(135deg, var(--primary-100), var(--accent-100));
+            position: relative;
+            overflow: hidden;
         }
+
         #detail-modal-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
+
         #detail-modal-price {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--secondary-color);
-            margin-bottom: 0.5rem;
-        }
-        #detail-modal-location {
-            font-size: 0.9rem;
-            color: #777;
-            margin-bottom: 1rem;
-        }
-        #detail-modal-description {
-            font-size: 1rem;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-            border-top: 1px solid var(--border-color);
-            padding-top: 1rem;
-        }
-        #detail-modal-seller-card {
-            background-color: #f9f9f9;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-        }
-        #detail-modal-seller-card span {
-            font-weight: 600;
-            margin-left: 0.75rem;
-        }
-        #detail-modal-actions {
-            display: flex;
-            gap: 0.75rem;
+            font-size: 2.25rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary-600), var(--accent-600));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-3);
+            letter-spacing: -0.03em;
         }
 
-        /* --- Saved Items Modal Styles --- */
+        #detail-modal-location {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-6);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        #detail-modal-location::before {
+            content: "📍";
+            font-size: 1.25rem;
+        }
+
+        #detail-modal-description {
+            font-size: 1.0625rem;
+            line-height: 1.7;
+            margin-bottom: var(--space-8);
+            padding-top: var(--space-6);
+            border-top: 2px solid var(--gray-100);
+            color: var(--text-secondary);
+        }
+
+        #detail-modal-seller-card {
+            background: linear-gradient(135deg, var(--primary-50), var(--accent-50));
+            border: 2px solid var(--primary-100);
+            border-radius: var(--radius-xl);
+            padding: var(--space-5);
+            margin-bottom: var(--space-8);
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        #detail-modal-seller-card span {
+            font-weight: 700;
+            color: var(--gray-900);
+            font-size: 1.0625rem;
+        }
+
+        #detail-modal-actions {
+            display: flex;
+            gap: var(--space-4);
+        }
+
+        /* ===================================
+    SAVED ITEMS MODAL
+    =================================== */
+
         #saved-items-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 1rem;
+            gap: var(--space-4);
         }
+
         .saved-item-card {
             display: flex;
             align-items: center;
-            background: #fdfdfd;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 0.75rem;
-            gap: 1rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9));
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            padding: var(--space-4);
+            gap: var(--space-4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        .saved-item-card:hover {
+            transform: translateX(8px);
+            border-color: var(--primary-300);
+            box-shadow: var(--shadow-lg);
+        }
+
         .saved-item-img {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             object-fit: cover;
-            border-radius: 5px;
-            background: #eee;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, var(--primary-100), var(--accent-100));
+            box-shadow: var(--shadow-sm);
         }
+
         .saved-item-info {
             flex-grow: 1;
         }
+
         .saved-item-title {
-            font-weight: 600;
-        }
-        .saved-item-price {
-            font-size: 0.9rem;
-            color: var(--secondary-color);
             font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: var(--space-1);
         }
+
+        .saved-item-price {
+            font-size: 1.125rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-600), var(--accent-600));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
         .saved-item-empty {
             text-align: center;
-            color: #777;
-            padding: 2rem 0;
+            color: var(--text-secondary);
+            padding: var(--space-16) 0;
+            font-size: 1.0625rem;
         }
 
+        /* ===================================
+    TOAST NOTIFICATIONS - BOLD FEEDBACK
+    =================================== */
 
-        /* --- Toast Notification Style --- */
         #toast {
-            display: none; 
+            display: none;
             position: fixed;
-            bottom: 30px;
+            bottom: var(--space-8);
             left: 50%;
             transform: translateX(-50%);
-            background-color: #333;
-            color: #fff;
-            padding: 12px 20px;
-            border-radius: 5px;
+            background: linear-gradient(135deg, var(--gray-900), var(--gray-800));
+            color: white;
+            padding: var(--space-4) var(--space-8);
+            border-radius: var(--radius-full);
             z-index: 2000;
-            font-size: 0.9rem;
-            animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
-        }
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
+            font-size: 0.9375rem;
+            font-weight: 600;
+            box-shadow: var(--shadow-2xl);
+            animation: toastSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1), toastSlideOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) 2.5s;
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* --- Responsive Design --- */
-        @media (max-width: 992px) {
+        @keyframes toastSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        @keyframes toastSlideOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        /* ===================================
+    RESPONSIVE DESIGN - MODERN & ADAPTIVE
+    =================================== */
+
+        @media (max-width: 1024px) {
             .main-content {
-                grid-template-columns: 220px 1fr;
+                grid-template-columns: 260px 1fr;
+                gap: var(--space-6);
+            }
+
+            .filters {
+                padding: var(--space-5);
+            }
+
+            .hero h1 {
+                font-size: 3rem;
             }
         }
 
         @media (max-width: 768px) {
+            :root {
+                --header-height: 64px;
+            }
+
             .main-content {
                 grid-template-columns: 1fr;
+                padding: var(--space-6) 0;
             }
+
+            /* HIDE DECORATIVE DIVIDER ON MOBILE */
+            .main-content::before {
+                display: none;
+            }
+
+            /* HIDE SECTION HEADER ON MOBILE FOR CLEANER LAYOUT */
+            .listings-grid::before {
+                font-size: 1.25rem;
+                margin-bottom: var(--space-4);
+            }
+
             .filters {
                 position: static;
-                margin-bottom: 1.5rem;
+                margin-bottom: var(--space-6);
             }
+
+            .header {
+                padding: var(--space-3) var(--space-4);
+            }
+
             .header-search {
-                display: none; 
+                display: none;
             }
+
+            .header-nav a,
             .header-nav button {
-                padding: 0.5rem;
-                font-size: 0.8rem;
+                padding: var(--space-2) var(--space-4);
+                font-size: 0.875rem;
             }
-            .header-nav button:first-child {
-                margin-left: 0.25rem;
-            }
+
             #welcome-msg {
-                display: none; 
+                display: none;
             }
+
+            .listings-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: var(--space-5);
+            }
+
+            .listing-card-image {
+                height: 180px;
+            }
+
             #detail-modal-image {
-                height: 200px; /* Smaller image on mobile */
+                height: 250px;
             }
+
             .modal-content {
-                margin: 5vh auto; /* Less top margin */
+                margin: 5vh auto;
+                width: 95%;
+            }
+
+            .modal-header {
+                padding: var(--space-5) var(--space-6);
+            }
+
+            .modal-body {
+                padding: var(--space-6);
+            }
+
+            .footer {
+                padding: var(--space-12) 0 var(--space-6) 0;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: var(--space-3);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .header-logo {
+                font-size: 1.25rem;
+            }
+
+            .header-logo::before {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                padding: 0 var(--space-4);
+            }
+
+            .listings-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-group h3 {
+                font-size: 1rem;
+            }
+
+            .btn {
+                padding: var(--space-2) var(--space-5);
+                font-size: 0.875rem;
+            }
+
+            .modal-header h2 {
+                font-size: 1.25rem;
+            }
+
+            #chat-window {
+                height: 300px;
+            }
+        }
+
+        /* ===================================
+           SELLER INBOX STYLES
+           =================================== */
+
+        .inbox-count {
+            background: var(--accent-500);
+            color: white;
+            border-radius: var(--radius-full);
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-left: 4px;
+        }
+
+        .inbox-message-card {
+            background: var(--bg-secondary);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            padding: var(--space-4);
+            margin-bottom: var(--space-3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .inbox-message-card:hover {
+            border-color: var(--primary-300);
+            transform: translateX(4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Dark mode inbox */
+        [data-theme="dark"] .inbox-message-card {
+            background: rgba(30, 41, 59, 0.4);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="dark"] .inbox-message-card:hover {
+            border-color: var(--primary-400);
+            background: rgba(30, 41, 59, 0.6);
+        }
+
+        .inbox-item-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            margin-bottom: var(--space-2);
+        }
+
+        .inbox-item-image {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            object-fit: cover;
+            border: 2px solid var(--gray-200);
+        }
+
+        .inbox-item-title {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .inbox-buyer-name {
+            font-size: 0.875rem;
+            color: var(--primary-600);
+        }
+
+        .inbox-message-preview {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: var(--space-2);
+            padding-top: var(--space-2);
+            border-top: 1px solid var(--gray-200);
+            font-style: italic;
+        }
+
+        .inbox-timestamp {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            margin-top: var(--space-2);
+        }
+
+        /* ===================================
+           ENHANCED MY LISTINGS CARD STYLING
+           =================================== */
+
+        .listing-card.my-listing {
+            border: 2px solid var(--primary-200);
+            background: linear-gradient(135deg, var(--bg-primary), var(--primary-50));
+        }
+
+        .listing-card.my-listing::after {
+            content: '📦 Your Listing';
+            position: absolute;
+            top: var(--space-2);
+            right: var(--space-2);
+            background: linear-gradient(135deg, var(--primary-600), var(--accent-500));
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: var(--radius-full);
+            z-index: 2;
+        }
+
+        [data-theme="dark"] .listing-card.my-listing {
+            border-color: var(--primary-400);
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(99, 102, 241, 0.1));
+        }
+
+        /* ===================================
+    SCROLL ENHANCEMENTS & ANIMATIONS
+    =================================== */
+
+        /* Smooth scroll behavior */
+        @media (prefers-reduced-motion: no-preference) {
+            html {
+                scroll-behavior: smooth;
+            }
+
+            * {
+                transition-property: transform, opacity, background, box-shadow, border-color;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* Loading spinner for async actions */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Page load fade-in */
+        body {
+            animation: pageLoad 0.6s ease-out;
+        }
+
+        @keyframes pageLoad {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
             }
         }
     </style>
@@ -657,24 +2025,31 @@
     <header class="header">
         <!-- Logo now links back to landing page -->
         <a href="index.html" class="header-logo">CampusBay</a>
-        
+
         <div class="header-search">
             <input type="search" id="search-input" placeholder="Search for textbooks, electronics, notes...">
         </div>
-        
+
         <nav class="header-nav">
             <!-- Logged Out State -->
             <div id="nav-logged-out">
+                <button id="theme-toggle" class="btn btn-secondary" aria-label="Toggle dark mode"
+                    style="padding: var(--space-3); width: 48px; height: 48px; border-radius: var(--radius-full); font-size: 1.25rem;"
+                    title="Toggle dark mode">🌙</button>
                 <button class="btn btn-primary" id="create-listing-btn-logged-out">
                     &#43; Sell Item
                 </button>
                 <button class="btn btn-secondary" id="login-btn">Login / Register</button>
             </div>
-            
+
             <!-- Logged In State -->
             <div id="nav-logged-in">
-                <span id="welcome-msg">Welcome, ABHILASH ARYA!</span> 
-                <button class="btn btn-secondary" id="saved-items-btn" style="margin-right: 10px;">&#9829; Saved (0)</button>
+                <button id="theme-toggle-logged-in" class="btn btn-secondary" aria-label="Toggle dark mode"
+                    style="padding: var(--space-3); width: 48px; height: 48px; border-radius: var(--radius-full); font-size: 1.25rem; margin-right: 10px;"
+                    title="Toggle dark mode">🌙</button>
+                <span id="welcome-msg">Welcome, ABHILASH ARYA!</span>
+                <button class="btn btn-secondary" id="saved-items-btn" style="margin-right: 10px;">&#9829; Saved
+                    (0)</button>
                 <button class="btn btn-primary" id="create-listing-btn-logged-in">
                     &#43; Sell Item
                 </button>
@@ -685,10 +2060,77 @@
     </header>
 
     <!-- ======================= MAIN CONTENT (Filters + Grid) ======================= -->
-    <main class="container main-content">
-        
-        <!-- --- FILTERS --- -->
+    <!-- MAIN GRID: Sidebar + Listings -->
+    <div class="main-content container">
+        <!-- Left Sidebar: Filters -->
         <aside class="filters">
+            <!-- SELLER STATS DASHBOARD (Only visible when logged in) -->
+            <div id="seller-stats"
+                style="display: none; margin-bottom: var(--space-6); padding-bottom: var(--space-6); border-bottom: 2px solid rgba(255, 255, 255, 0.5);">
+                <h3
+                    style="font-size: 1rem; margin-bottom: var(--space-4); color: var(--gray-900); display: flex; align-items: center; gap: var(--space-2);">
+                    <span>📊</span> Your Stats
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+                    <div class="stat-card"
+                        style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0.05)); padding: var(--space-3); border-radius: var(--radius-lg); border: 1px solid rgba(99, 102, 241, 0.2);">
+                        <div
+                            style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">
+                            Listings</div>
+                        <div id="stat-total-listings"
+                            style="font-size: 1.5rem; font-weight: 800; color: var(--primary-700); margin-top: var(--space-1);">
+                            0</div>
+                    </div>
+                    <div class="stat-card"
+                        style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)); padding: var(--space-3); border-radius: var(--radius-lg); border: 1px solid rgba(16, 185, 129, 0.2);">
+                        <div
+                            style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">
+                            Sold</div>
+                        <div id="stat-sold-items"
+                            style="font-size: 1.5rem; font-weight: 800; color: var(--success-600); margin-top: var(--space-1);">
+                            0</div>
+                    </div>
+                    <div class="stat-card"
+                        style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(236, 72, 153, 0.05)); padding: var(--space-3); border-radius: var(--radius-lg); border: 1px solid rgba(236, 72, 153, 0.2); grid-column: 1 / -1;">
+                        <div
+                            style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">
+                            Total Earnings</div>
+                        <div id="stat-earnings"
+                            style="font-size: 1.5rem; font-weight: 800; color: var(--accent-600); margin-top: var(--space-1);">
+                            ₹0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MY LISTINGS QUICK FILTER (Only visible when logged in) -->
+            <div id="my-listings-filter" style="display: none; margin-bottom: var(--space-6);">
+                <button id="toggle-my-listings-btn" class="btn btn-secondary"
+                    style="width: 100%; display: flex; align-items: center; justify-content: center; gap: var(--space-2); padding: var(--space-3);">
+                    <span id="my-listings-icon">📦</span>
+                    <span id="my-listings-text">Show My Listings Only</span>
+                </button>
+            </div>
+
+            <!-- PURCHASE HISTORY (Only visible when logged in) -->
+            <div id="purchase-history-section" style="display: none; margin-bottom: var(--space-6);">
+                <button id="my-purchases-btn" class="btn btn-success"
+                    style="width: 100%; display: flex; align-items: center; justify-content: center; gap: var(--space-2); padding: var(--space-3); margin-bottom: var(--space-2);">
+                    <span>🛍️</span>
+                    <span>My Purchases</span>
+                </button>
+                <button id="my-sold-items-btn" class="btn btn-secondary"
+                    style="width: 100%; display: flex; align-items: center; justify-content: center; gap: var(--space-2); padding: var(--space-3); margin-bottom: var(--space-2);">
+                    <span>💰</span>
+                    <span>My Sold Items</span>
+                </button>
+                <button id="seller-inbox-btn" class="btn btn-secondary"
+                    style="width: 100%; display: flex; align-items: center; justify-content: center; gap: var(--space-2); padding: var(--space-3);">
+                    <span>💬</span>
+                    <span>Messages Inbox</span>
+                    <span class="inbox-count" id="inbox-count" style="display: none;">0</span>
+                </button>
+            </div>
+
             <div class="filter-group">
                 <h3>Categories</h3>
                 <label><input type="checkbox" class="category-filter" value="Books"> Books</label>
@@ -717,11 +2159,26 @@
         </aside>
 
         <!-- --- LISTINGS --- -->
-        <section class="listings-grid" id="listings-grid">
-            <!-- Listings will be dynamically inserted here -->
+        <!-- Right: Listings Grid -->
+        <section class="listings-grid-section">
+            <!-- Loading Overlay -->
+            <div id="loading-overlay"
+                style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); z-index: 9999; display: flex; align-items: center; justify-content: center;">
+                <div style="text-align: center;">
+                    <div class="spinner"
+                        style="width: 50px; height: 50px; border: 4px solid rgba(99, 102, 241, 0.2); border-top-color: var(--primary-600); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto var(--space-4);">
+                    </div>
+                    <div style="font-size: 1.125rem; font-weight: 600; color: var(--text-primary);">Loading amazing
+                        products...</div>
+                </div>
+            </div>
+
+            <div class="listings-grid" id="listings-grid">
+                <!-- Listings will be dynamically inserted here -->
+            </div>
         </section>
 
-    </main>
+    </div><!-- End main-content -->
 
     <!-- ======================= FOOTER ======================= -->
     <footer class="footer">
@@ -743,10 +2200,10 @@
     <!-- --- Login/Register Modal (COMBINED) --- -->
     <div id="login-modal" class="modal">
         <div class="modal-content modal-content-small">
-            
+
             <div class="modal-header">
                 <h2 id="auth-modal-title">Login</h2> <!-- Title will change with JS -->
-                <span class="modal-close-btn" data-modal-id="login-modal">&times;</span>
+                <span class="modal-close-btn" data-modal-id="login">&times;</span>
             </div>
 
             <!-- NEW: Auth Tabs -->
@@ -754,31 +2211,36 @@
                 <div class="auth-tab active" id="login-tab-btn">Login</div>
                 <div class="auth-tab" id="register-tab-btn">Register</div>
             </div>
-            
+
             <!-- Login Form Container -->
             <div class="auth-form-container active" id="login-form-container">
                 <div class="modal-body">
                     <form id="login-form">
                         <div class="form-group">
                             <label for="email">Campus Email</label>
-                            <input type="email" id="login-email" placeholder="e.g., abhilash@bmsce.ac.in" required>
+                            <input type="email" id="login-email" placeholder="e.g., abhilash@bmsce.ac.in" required
+                                autocomplete="off">
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" id="login-password" required>
+                            <input type="password" id="login-password" required autocomplete="new-password">
                         </div>
-                        <button type="submit" class="btn btn-primary" style="width:100%; padding: 0.75rem;">Login</button>
-                        
+                        <button type="submit" class="btn btn-primary"
+                            style="width:100%; padding: 0.75rem;">Login</button>
+
                         <button type="button" class="btn-demo" id="demo-login-btn">
                             &#11088; Login as Demo
                         </button>
 
                         <p class="form-error" id="login-error-msg">Invalid credentials. Try a demo account.</p>
-                        
+
                         <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem;">
                             Demo accounts: <br>
-                            <code style="background: #eee; padding: 2px 5px; border-radius: 4px;">abhilash@bmsce.ac.in</code> <br>
-                            <code style="background: #eee; padding: 2px 5px; border-radius: 4px;">student@rvce.ac.in</code>
+                            <code
+                                style="background: #eee; padding: 2px 5px; border-radius: 4px;">abhilash@bmsce.ac.in</code>
+                            <br>
+                            <code
+                                style="background: #eee; padding: 2px 5px; border-radius: 4px;">student@rvce.ac.in</code>
                         </p>
                     </form>
                 </div>
@@ -805,8 +2267,9 @@
                             <input type="password" id="register-confirm-password" required>
                         </div>
 
-                        <button type="submit" class="btn btn-primary" style="width:100%; padding: 0.75rem;">Create Account</button>
-                        
+                        <button type="submit" class="btn btn-primary" style="width:100%; padding: 0.75rem;">Create
+                            Account</button>
+
                         <p class="form-error" id="register-error-msg">Passwords do not match.</p>
                     </form>
                 </div>
@@ -820,13 +2283,14 @@
         <div class="modal-content modal-content-small">
             <div class="modal-header">
                 <h2>Create New Listing</h2>
-                <span class="modal-close-btn" data-modal-id="create-listing-modal">&times;</span>
+                <span class="modal-close-btn" data-modal-id="create">&times;</span>
             </div>
             <div class="modal-body">
                 <form id="create-listing-form">
                     <div class="form-group">
                         <label for="listing-title">Title</label>
-                        <input type="text" id="listing-title" placeholder="e.g., Engineering Data Structures Textbook" required>
+                        <input type="text" id="listing-title" placeholder="e.g., Engineering Data Structures Textbook"
+                            required>
                     </div>
                     <div class="form-group">
                         <label for="listing-price">Price (&#8377;)</label>
@@ -849,14 +2313,18 @@
                     </div>
                     <div class="form-group">
                         <label for="listing-description">Description</label>
-                        <textarea id="listing-description" placeholder="Add details: condition, edition, etc."></textarea>
+                        <textarea id="listing-description"
+                            placeholder="Add details: condition, edition, etc."></textarea>
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
                         <label for="images">Upload Images (Optional)</label>
                         <input type="file" id="images" multiple>
-                        <small style="display:block; margin-top: 5px; color: #777;">This is for demo, images won't be saved.</small>
+                        <small style="display:block; margin-top: 5px; color: #777;">This is for demo, images won't
+                            be
+                            saved.</small>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width:100%; padding: 0.75rem;">Post Your Listing</button>
+                    <button type="submit" class="btn btn-primary" style="width:100%; padding: 0.75rem;">Post Your
+                        Listing</button>
                 </form>
             </div>
         </div>
@@ -867,7 +2335,13 @@
         <div class="modal-content modal-content-small">
             <div class="modal-header">
                 <h2 id="chat-modal-title">Chat with Seller</h2>
-                <span class="modal-close-btn" data-modal-id="chat-modal">&times;</span>
+                <div style="display: flex; align-items: center; gap: var(--space-3);">
+                    <button id="refresh-chat-btn" class="btn btn-secondary"
+                        style="padding: var(--space-2) var(--space-3); font-size: 0.875rem;" title="Refresh messages">
+                        🔄 Refresh
+                    </button>
+                    <span class="modal-close-btn" data-modal-id="chat">&times;</span>
+                </div>
             </div>
             <div class="modal-body">
                 <div id="chat-window">
@@ -887,9 +2361,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="detail-modal-title">Listing Details</h2>
-                <span class="modal-close-btn" data-modal-id="listing-detail-modal">&times;</span>
+                <span class="modal-close-btn" data-modal-id="detail">&times;</span>
             </div>
-            
+
             <div id="detail-modal-image">
                 <img src="" alt="Listing Image" id="detail-modal-img-src">
             </div>
@@ -904,11 +2378,19 @@
                     <!-- Seller name will be set by JS -->
                     <span id="detail-modal-seller-name">Seller: Name</span>
                 </div>
-                
+
                 <div id="detail-modal-actions">
-                    <button class="btn btn-primary" id="detail-modal-chat-btn">Message Seller</button>
+                    <button class="btn btn-primary" id="detail-modal-buy-btn">💳 Buy Now</button>
+                    <button class="btn btn-secondary" id="detail-modal-chat-btn">Message Seller</button>
                     <button class="btn btn-secondary" id="detail-modal-save-btn">Save for Later</button>
-                    <button class="btn btn-danger" id="detail-modal-delete-btn" style="display: none;">🗑️ Delete Item</button>
+
+                    <!-- OWNER ACTIONS -->
+                    <button class="btn btn-primary" id="detail-modal-msg-buyer-btn" style="display: none;">Message
+                        Buyer</button>
+                    <button class="btn btn-secondary" id="detail-modal-mark-status-btn" style="display: none;">✓ Mark as
+                        Sold</button>
+                    <button class="btn btn-danger" id="detail-modal-delete-btn" style="display: none;">🗑️ Delete
+                        Item</button>
                 </div>
             </div>
         </div>
@@ -919,7 +2401,7 @@
         <div class="modal-content modal-content-small">
             <div class="modal-header">
                 <h2>Your Saved Items</h2>
-                <span class="modal-close-btn" data-modal-id="saved-items-modal">&times;</span>
+                <span class="modal-close-btn" data-modal-id="saved">&times;</span>
             </div>
             <div class="modal-body">
                 <div id="saved-items-grid">
@@ -930,8 +2412,227 @@
         </div>
     </div>
 
+    <!-- My Purchases Modal -->
+    <div id="purchases-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🛍️ My Purchases</h2>
+                <span class="modal-close-btn" data-modal-id="purchases">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="purchases-grid"
+                    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-4);">
+                    <p class="no-listings-message">You haven't purchased anything yet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- My Sold Items Modal -->
+    <div id="sold-items-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>💰 My Sold Items</h2>
+                <span class="modal-close-btn" data-modal-id="sold-items">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="sold-items-grid"
+                    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-4);">
+                    <p class="no-listings-message">You haven't sold anything yet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seller Purchase Notification Modal -->
+    <div id="seller-notification-modal" class="modal">
+        <div class="modal-content modal-content-small">
+            <div style="text-align: center; padding: var(--space-6);">
+                <div style="font-size: 4rem; margin-bottom: var(--space-3);">🎉</div>
+                <h2
+                    style="font-size: 1.5rem; font-weight: 800; margin-bottom: var(--space-3); color: var(--success-600);">
+                    Congratulations! Your Item Was Purchased!
+                </h2>
+                <div id="seller-notification-content"
+                    style="text-align: left; background: var(--gray-50); padding: var(--space-5); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+                <button class="btn btn-primary"
+                    onclick="document.getElementById('seller-notification-modal').style.display='none'; document.body.style.overflow='auto';"
+                    style="width: 100%;">
+                    Got it!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seller Messages Inbox Modal -->
+    <div id="seller-inbox-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>💬 Messages Inbox</h2>
+                <span class="modal-close-btn" data-modal-id="seller-inbox">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+                    Messages from buyers about your listed products
+                </p>
+                <div id="inbox-messages-container">
+                    <p class="no-listings-message">No messages yet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast Notification -->
     <div id="toast">Item saved!</div>
+
+    <!-- Payment Success Modal -->
+    <div id="payment-success-modal" class="modal">
+        <div class="modal-content modal-content-small">
+            <div style="text-align: center; padding: var(--space-8) var(--space-6);">
+                <div style="font-size: 4rem; margin-bottom: var(--space-4); animation: successPulse 0.6s ease;">
+                    ✅
+                </div>
+                <h2
+                    style="font-size: 1.75rem; font-weight: 800; margin-bottom: var(--space-3); 
+                           background: linear-gradient(135deg, var(--success-600), var(--success-700));
+                           -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    Payment Successful!
+                </h2>
+                <p style="font-size: 1.125rem; color: var(--text-secondary); margin-bottom: var(--space-6);">
+                    Your purchase has been completed
+                </p>
+                <div id="payment-success-details" style="background: linear-gradient(135deg, var(--success-50), var(--accent-50));
+                     padding: var(--space-5); border-radius: var(--radius-xl); border: 2px solid var(--success-200);">
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-tertiary); margin-top: var(--space-4);">
+                    The seller will contact you shortly about pickup
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes successPulse {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+
+
+    <!-- --- Payment Modal --- -->
+    <div id="payment-modal" class="modal">
+        <div class="modal-content modal-content-small">
+            <div class="modal-header">
+                <h2>💳 Complete Purchase</h2>
+                <span class="modal-close-btn" data-modal-id="payment">&times;</span>
+            </div>
+            <div class="modal-body">
+                <!-- Item Summary -->
+                <div style="background: linear-gradient(135deg, var(--primary-50), var(--accent-50)); 
+                                padding: var(--space-5); border-radius: var(--radius-xl); margin-bottom: var(--space-6);
+                                border: 2px solid var(--primary-100);">
+                    <h3
+                        style="font-size: 1.125rem; font-weight: 700; margin-bottom: var(--space-3); color: var(--gray-900);">
+                        Item Details
+                    </h3>
+                    <div style="display: flex; gap: var(--space-4); align-items: center;">
+                        <img id="payment-item-image" src="" alt="Item"
+                            style="width: 80px; height: 80px; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);">
+                        <div style="flex: 1;">
+                            <div id="payment-item-title"
+                                style="font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-2);">
+                            </div>
+                            <div id="payment-item-price"
+                                style="font-size: 1.5rem; font-weight: 800; 
+                                     background: linear-gradient(135deg, var(--primary-600), var(--accent-600));
+                                     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        style="margin-top: var(--space-4); padding-top: var(--space-4); border-top: 2px solid rgba(255,255,255,0.5);">
+                        <div style="font-size: 0.875rem; color: var(--text-secondary);">
+                            Seller: <span id="payment-seller-name"
+                                style="font-weight: 600; color: var(--gray-900);"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buyer Details Form -->
+                <form id="payment-form">
+                    <div class="form-group">
+                        <label for="payment-buyer-name">Your Name</label>
+                        <input type="text" id="payment-buyer-name" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment-buyer-phone">Phone Number</label>
+                        <input type="tel" id="payment-buyer-phone" placeholder="10-digit mobile number"
+                            pattern="[0-9]{10}" required>
+                    </div>
+
+                    <!-- Card Details Section -->
+                    <div
+                        style="margin-top: var(--space-5); padding-top: var(--space-5); border-top: 2px solid var(--gray-200);">
+                        <h3
+                            style="font-size: 1.125rem; font-weight: 700; margin-bottom: var(--space-4); color: var(--gray-900);">
+                            💳 Card Details
+                        </h3>
+
+                        <div class="form-group">
+                            <label for="payment-card-number">Card Number</label>
+                            <input type="text" id="payment-card-number" placeholder="1234 5678 9012 3456" maxlength="19"
+                                required>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+                            <div class="form-group">
+                                <label for="payment-card-expiry">Expiry Date</label>
+                                <input type="text" id="payment-card-expiry" placeholder="MM/YY" maxlength="5" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="payment-card-cvv">CVV</label>
+                                <input type="password" id="payment-card-cvv" placeholder="123" maxlength="4" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="payment-card-name">Cardholder Name</label>
+                            <input type="text" id="payment-card-name" placeholder="Name on card" required>
+                        </div>
+                    </div>
+
+                    <div
+                        style="background: var(--gray-50); padding: var(--space-4); border-radius: var(--radius-lg); margin-bottom: var(--space-5); margin-top: var(--space-4);">
+                        <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: var(--space-2);">
+                            💡 <strong>Demo Payment Mode</strong>
+                        </div>
+                        <div style="font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.5;">
+                            This is a demonstration. In production, this would integrate with a real payment gateway
+                            (Razorpay/Stripe/PayPal). Click "Complete Purchase" to simulate a successful payment.
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary"
+                        style="width: 100%; padding: var(--space-4); font-size: 1rem;">
+                        💳 Complete Purchase
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
     <!-- 
@@ -1090,7 +2791,7 @@
                     const card = `
                         <article class="listing-card" data-listing-id="${listing.id}">
                             <div class="listing-card-image">
-                                <img src="${listing.image.replace('600x400', '400x300')}" alt="${listing.title}" onerror="this.parentElement.innerHTML = 'Image for ${listing.title}';">
+                                <img src="${listing.image.replace('600x400', '400x300')}" alt="${listing.title}" loading="lazy" onerror="this.parentElement.innerHTML = 'Image for ${listing.title}';">
                             </div>
                             <div class="listing-card-content">
                                 <h3 class="listing-card-title">${listing.title}</h3>
@@ -1156,11 +2857,16 @@
             const detailSellerName = document.getElementById('detail-modal-seller-name'); 
             const detailChatBtn = document.getElementById('detail-modal-chat-btn');
             const detailSaveBtn = document.getElementById('detail-modal-save-btn'); 
+            const detailBuyBtn = document.getElementById('detail-modal-buy-btn');
+            const detailMsgBuyerBtn = document.getElementById('detail-modal-msg-buyer-btn');
+            const detailMarkSoldBtn = document.getElementById('detail-modal-mark-status-btn');
+            const detailDeleteBtn = document.getElementById('detail-modal-delete-btn');
 
             function showDetailModal(listingId) {
                 const listing = listingsData.find(l => l.id == listingId);
                 if (!listing) return;
 
+                // 1. POPULATE DATA
                 detailTitle.innerText = listing.title;
                 detailImg.src = listing.image;
                 detailImg.alt = listing.title;
@@ -1169,11 +2875,45 @@
                 detailDescription.innerText = listing.description;
                 detailSellerName.innerText = `Seller: ${listing.seller}`; 
                 
+                // 2. CHECK OWNERSHIP
+                const welcomeText = document.getElementById('welcome-msg').innerText;
+                // Extract name e.g. "Welcome, Abhilash!" -> "Abhilash" (approximate)
+                // Better to use a robust way if available, but relying on text as per existing patterns
+                let currentUserName = "";
+                if (welcomeText.includes("Welcome, ")) {
+                    currentUserName = welcomeText.replace("Welcome, ", "").replace("!", "").trim(); // Remove "!"
+                }
+
+                // EXACT NAME MATCH CHECK
+                const isOwner = (currentUserName === listing.seller);
+
+                if (isOwner) {
+                    // SHOW OWNER ACTIONS
+                    detailBuyBtn.style.display = 'none';
+                    detailChatBtn.style.display = 'none';
+                    detailSaveBtn.style.display = 'none';
+
+                    detailMsgBuyerBtn.style.display = 'inline-block';
+                    detailMarkSoldBtn.style.display = 'inline-block';
+                    detailDeleteBtn.style.display = 'inline-block';
+                } else {
+                    // SHOW BUYER ACTIONS
+                    detailBuyBtn.style.display = 'inline-block';
+                    detailChatBtn.style.display = 'inline-block';
+                    detailSaveBtn.style.display = 'inline-block';
+
+                    detailMsgBuyerBtn.style.display = 'none';
+                    detailMarkSoldBtn.style.display = 'none';
+                    detailDeleteBtn.style.display = 'none';
+                }
+
+                // Chat logic
                 detailChatBtn.onclick = () => {
                     modals.detail.style.display = 'none'; 
                     showChatModal(listing.title); 
                 };
-
+                
+                // Save Logic
                 detailSaveBtn.dataset.listingId = listing.id;
                 if (savedItems.has(listing.id)) {
                     detailSaveBtn.innerText = '✓ Saved';
@@ -1470,8 +3210,44 @@
         });
     </script> -->
 
-    <!-- Load API Client First, Then Frontend Logic -->
+    <!-- Premium Scroll Effects -->
+    <script>
+        // Header scroll effect for enhanced glassmorphism
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+
+    <!-- Load Theme Manager First -->
+    <script src="theme.js"></script>
+
+    <!-- Load API Client, Then Frontend Logic -->
     <script src="api.js"></script>
     <script src="app-integrated.js"></script>
+
+    <!-- Dark Mode Toggle Event Listeners -->
+    <script>
+        // Handle theme toggle for both logged out and logged in buttons
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeToggleLoggedIn = document.getElementById('theme-toggle-logged-in');
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                themeManager.toggle();
+            });
+        }
+
+        if (themeToggleLoggedIn) {
+            themeToggleLoggedIn.addEventListener('click', () => {
+                themeManager.toggle();
+            });
+        }
+    </script>
 </body>
+
 </html>
