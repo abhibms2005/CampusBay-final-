@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const multer = require('multer');
 const path = require('path');
 const Item = require('../models/Item');
@@ -6,6 +7,10 @@ const auth = require('../middleware/auth');
 const { createItemValidator } = require('../middleware/validators');
 
 const router = express.Router();
+
+// Helper to check MongoDB connection
+const isDbConnected = () => mongoose.connection.readyState === 1;
+
 
 /**
  * CampusBay Item Routes - Production Ready
@@ -84,10 +89,20 @@ router.post('/', auth, upload.single('image'), createItemValidator, async (req, 
 // GET /api/items
 router.get('/', async (req, res) => {
   try {
+    // Check MongoDB connection
+    if (!isDbConnected()) {
+      console.error('MongoDB not connected when fetching items');
+      return res.status(503).json({
+        error: 'Database connection unavailable',
+        message: 'Please ensure MONGO_URI environment variable is set correctly'
+      });
+    }
+
     const { q, category, page = 1, limit = 50, includeStatus, sort = 'newest' } = req.query;
 
     // Build filter - exclude soft-deleted items
     const filter = { deletedAt: null };
+
 
     // Filter by availability status
     if (includeStatus === 'ALL') {

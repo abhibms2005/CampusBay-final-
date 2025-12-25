@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const cors = require('cors');
+const fs = require('fs');
 
 const authRoutes = require('./routes/auth');
 const itemRoutes = require('./routes/items');
@@ -12,6 +13,13 @@ const wishlistRoutes = require('./routes/wishlist');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+// Ensure uploads directory exists
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+  console.log('📁 Created uploads directory');
+}
+
 app.use(cors({
   origin: process.env.FRONTEND_ORIGIN || '*'
 }));
@@ -19,6 +27,7 @@ app.use(express.json());
 
 // Serve uploaded images
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 // Serve static frontend (drop your index.html and marketplace.html into a folder named 'public')
 app.use(express.static(path.join(__dirname, 'public')));
