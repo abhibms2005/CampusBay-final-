@@ -932,8 +932,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (demoLoginBtn) {
     demoLoginBtn.addEventListener('click', async () => {
       try {
-        const result = await api.login('abhilash@bmsce.ac.in', 'password123');
-        showToast(`Demo login successful!`);
+        const result = await api.login('sneha.reddy@bmsce.ac.in', 'Password@123');
+        showToast(`Demo login successful! Welcome, Sneha Reddy!`);
         updateAuthUI();
         closeModal('login');
         await loadItems();

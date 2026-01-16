@@ -119,17 +119,9 @@ itemSchema.methods.getImageWithFallback = function () {
     return this.imageUrl;
   }
 
-  // Robust Category-Based Fallbacks (LoremFlickr - Reliable Realism)
-  const fallbacks = {
-    'Books': 'https://loremflickr.com/640/480/textbook,study?lock=101',
-    'Electronics': 'https://loremflickr.com/640/480/gadget,used?lock=102',
-    'Fashion': 'https://loremflickr.com/640/480/clothing,casual?lock=103',
-    'Furniture': 'https://loremflickr.com/640/480/bed,dorm?lock=104',
-    'Stationery': 'https://loremflickr.com/640/480/stationary,pencil?lock=105',
-    'General': 'https://loremflickr.com/640/480/object,student?lock=106'
-  };
-
-  return fallbacks[this.category] || fallbacks['General'];
+  // No auto-generated images - return null
+  // Items without uploaded images will show placeholder in frontend
+  return null;
 };
 
 // Method to mark item as sold

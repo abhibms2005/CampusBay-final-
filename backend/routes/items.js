@@ -94,11 +94,11 @@ router.get('/', async (req, res) => {
       console.warn('⚠️ MongoDB not connected. Serving MOCK DATA (Demo Mode).');
 
       const mockItems = [
-        { _id: 'mock1', title: 'Engineering Mathematics by BS Grewal', description: 'Complete textbook with solved examples.', price: 350, category: 'Books', imageUrl: 'https://loremflickr.com/640/480/textbook,thick?lock=1', seller: { name: 'Priya S.', verified: true }, viewCount: 12, createdAt: new Date() },
-        { _id: 'mock2', title: 'OnePlus Nord CE 2', description: '8GB RAM, 128GB storage. Excellent condition.', price: 15500, category: 'Electronics', imageUrl: 'https://loremflickr.com/640/480/phone,table?lock=5', seller: { name: 'Rahul V.', verified: true }, viewCount: 45, createdAt: new Date() },
-        { _id: 'mock3', title: 'Scientific Calculator Casio fx-991EX', description: 'Perfect for exams, all functions working.', price: 650, category: 'Stationery', imageUrl: 'https://loremflickr.com/640/480/calculator,desk?lock=14', seller: { name: 'Arjun S.', verified: false }, viewCount: 8, createdAt: new Date() },
-        { _id: 'mock4', title: 'Study Table with Chair', description: 'Wooden study table + revolving chair.', price: 2500, category: 'Furniture', imageUrl: 'https://loremflickr.com/640/480/desk,study?lock=18', seller: { name: 'Sneha R.', verified: true }, viewCount: 30, createdAt: new Date() },
-        { _id: 'mock5', title: 'Guitar - Yamaha F280', description: 'Acoustic guitar in excellent condition.', price: 6500, category: 'General', imageUrl: 'https://loremflickr.com/640/480/guitar,acoustic?lock=22', seller: { name: 'Aditya K.', verified: true }, viewCount: 22, createdAt: new Date() }
+        { _id: 'mock1', title: 'Engineering Mathematics by BS Grewal', description: 'Complete textbook with solved examples.', price: 350, category: 'Books', imageUrl: 'https://placehold.co/640x480/cccccc/333333?text=No+Image', seller: { name: 'Priya S.', verified: true }, viewCount: 12, createdAt: new Date() },
+        { _id: 'mock2', title: 'OnePlus Nord CE 2', description: '8GB RAM, 128GB storage. Excellent condition.', price: 15500, category: 'Electronics', imageUrl: 'https://placehold.co/640x480/cccccc/333333?text=No+Image', seller: { name: 'Rahul V.', verified: true }, viewCount: 45, createdAt: new Date() },
+        { _id: 'mock3', title: 'Scientific Calculator Casio fx-991EX', description: 'Perfect for exams, all functions working.', price: 650, category: 'Stationery', imageUrl: 'https://placehold.co/640x480/cccccc/333333?text=No+Image', seller: { name: 'Arjun S.', verified: false }, viewCount: 8, createdAt: new Date() },
+        { _id: 'mock4', title: 'Study Table with Chair', description: 'Wooden study table + revolving chair.', price: 2500, category: 'Furniture', imageUrl: 'https://placehold.co/640x480/cccccc/333333?text=No+Image', seller: { name: 'Sneha R.', verified: true }, viewCount: 30, createdAt: new Date() },
+        { _id: 'mock5', title: 'Guitar - Yamaha F280', description: 'Acoustic guitar in excellent condition.', price: 6500, category: 'General', imageUrl: 'https://placehold.co/640x480/cccccc/333333?text=No+Image', seller: { name: 'Aditya K.', verified: true }, viewCount: 22, createdAt: new Date() }
       ];
 
       return res.json({

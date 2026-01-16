@@ -6,26 +6,26 @@ require('dotenv').config();
 
 // Sample Indian college students 
 const sampleUsers = [
-    { name: 'Priya Sharma', email: 'priya.sharma@bmsce.ac.in', password: 'password123', college: 'BMS College of Engineering' },
-    { name: 'Rahul Verma', email: 'rahul.verma@bmsce.ac.in', password: 'password123', college: 'BMS College of Engineering' },
-    { name: 'Ananya Patel', email: 'ananya.patel@bmsce.ac.in', password: 'password123', college: 'BMS College of Engineering' },
-    { name: 'Arjun Singh', email: 'arjun.singh@bmsce.ac.in', password: 'password123', college: 'BMS College of Engineering' },
-    { name: 'Sneha Reddy', email: 'sneha.reddy@bmsce.ac.in', password: 'password123', college: 'BMS College of Engineering' },
-    { name: 'Vikram Rao', email: 'vikram.rao@bmsce.ac.in', password: 'password123', college: 'BMS College of Engineering' },
-    { name: 'Kavya Iyer', email: 'kavya.iyer@bmsce.ac.in', password: 'password123', college: 'BMS College of Engineering' },
-    { name: 'Aditya Kumar', email: 'aditya.kumar@bmsce.ac.in', password: 'password123', college: 'BMS College of Engineering' }
+    { name: 'Priya Sharma', email: 'priya.sharma@bmsce.ac.in', password: 'Password@123', college: 'BMS College of Engineering' },
+    { name: 'Rahul Verma', email: 'rahul.verma@bmsce.ac.in', password: 'Password@123', college: 'BMS College of Engineering' },
+    { name: 'Ananya Patel', email: 'ananya.patel@bmsce.ac.in', password: 'Password@123', college: 'BMS College of Engineering' },
+    { name: 'Arjun Singh', email: 'arjun.singh@bmsce.ac.in', password: 'Password@123', college: 'BMS College of Engineering' },
+    { name: 'Sneha Reddy', email: 'sneha.reddy@bmsce.ac.in', password: 'Password@123', college: 'BMS College of Engineering' },
+    { name: 'Vikram Rao', email: 'vikram.rao@bmsce.ac.in', password: 'Password@123', college: 'BMS College of Engineering' },
+    { name: 'Kavya Iyer', email: 'kavya.iyer@bmsce.ac.in', password: 'Password@123', college: 'BMS College of Engineering' },
+    { name: 'Aditya Kumar', email: 'aditya.kumar@bmsce.ac.in', password: 'Password@123', college: 'BMS College of Engineering' }
 ];
 
-// Sample marketplace items with Indian context and SPECIFIC UNIQUE IMAGES
+// Sample marketplace items with Indian context and CUSTOM CATEGORY LOGO IMAGES
 const sampleItems = [
-    // Books (Thick textbooks, studying)
+    // Books
     {
         title: 'Engineering Mathematics by BS Grewal',
         description: 'Complete textbook with solved examples. Excellent condition, minimal highlighting.',
         price: 350,
         category: 'Books',
         location: 'Main Gate',
-        imageUrl: 'https://loremflickr.com/640/480/textbook,thick?lock=1'
+        imageUrl: '/uploads/books_logo.png'
     },
     {
         title: 'Data Structures in C - Tanenbaum',
@@ -33,7 +33,7 @@ const sampleItems = [
         price: 280,
         category: 'Books',
         location: 'Library Block',
-        imageUrl: 'https://loremflickr.com/640/480/book,used?lock=2'
+        imageUrl: '/uploads/books_logo.png'
     },
     {
         title: 'NCERT Physics Class 12',
@@ -41,7 +41,7 @@ const sampleItems = [
         price: 180,
         category: 'Books',
         location: 'Hostel 2',
-        imageUrl: 'https://loremflickr.com/640/480/textbook,old?lock=3'
+        imageUrl: '/uploads/books_logo.png'
     },
     {
         title: 'Digital Electronics - Morris Mano',
@@ -49,17 +49,17 @@ const sampleItems = [
         price: 320,
         category: 'Books',
         location: 'ECE Block',
-        imageUrl: 'https://loremflickr.com/640/480/electronics,circuit?lock=4'
+        imageUrl: '/uploads/books_logo.png'
     },
 
-    // Electronics (Used, gadgets)
+    // Electronics
     {
         title: 'OnePlus Nord CE 2',
         description: '8GB RAM, 128GB storage. Excellent condition, 11 months old. Charger included.',
         price: 15500,
         category: 'Electronics',
         location: 'Hostel 1',
-        imageUrl: 'https://loremflickr.com/640/480/phone,table?lock=5'
+        imageUrl: '/uploads/electronics_logo.png'
     },
     {
         title: 'Realme Buds Air 3',
@@ -67,7 +67,7 @@ const sampleItems = [
         price: 2800,
         category: 'Electronics',
         location: 'Main Gate',
-        imageUrl: 'https://loremflickr.com/640/480/earphones,tangled?lock=6'
+        imageUrl: '/uploads/electronics_logo.png'
     },
     {
         title: 'HP Laptop i5 10th Gen',
@@ -75,7 +75,7 @@ const sampleItems = [
         price: 32000,
         category: 'Electronics',
         location: 'Boys Hostel',
-        imageUrl: 'https://loremflickr.com/640/480/laptop,hp?lock=7'
+        imageUrl: '/uploads/electronics_logo.png'
     },
     {
         title: 'JBL Go 3 Speaker',
@@ -83,7 +83,7 @@ const sampleItems = [
         price: 1800,
         category: 'Electronics',
         location: 'Library',
-        imageUrl: 'https://loremflickr.com/640/480/speaker,bluetooth?lock=8'
+        imageUrl: '/uploads/electronics_logo.png'
     },
     {
         title: 'Logitech Wireless Mouse',
@@ -91,17 +91,17 @@ const sampleItems = [
         price: 450,
         category: 'Electronics',
         location: 'IT Block',
-        imageUrl: 'https://loremflickr.com/640/480/mouse,pad?lock=9'
+        imageUrl: '/uploads/electronics_logo.png'
     },
 
-    // Fashion (Casual student wear)
+    // Fashion
     {
         title: 'College Uniform Set',
         description: '2 shirts + 2 trousers (M size). Well maintained.',
         price: 800,
         category: 'Fashion',
         location: 'Hostel 3',
-        imageUrl: 'https://loremflickr.com/640/480/clothes,ironed?lock=10'
+        imageUrl: '/uploads/fashion_logo.png'
     },
     {
         title: 'Printed Kurta for Girls',
@@ -109,7 +109,7 @@ const sampleItems = [
         price: 550,
         category: 'Fashion',
         location: 'Girls Hostel',
-        imageUrl: 'https://loremflickr.com/640/480/dress,casual?lock=11'
+        imageUrl: '/uploads/fashion_logo.png'
     },
     {
         title: 'Formal Shoes - Bata',
@@ -117,7 +117,7 @@ const sampleItems = [
         price: 900,
         category: 'Fashion',
         location: 'Main Block',
-        imageUrl: 'https://loremflickr.com/640/480/shoes,formal?lock=12'
+        imageUrl: '/uploads/fashion_logo.png'
     },
     {
         title: 'Denim Jacket - Levis',
@@ -125,17 +125,17 @@ const sampleItems = [
         price: 1200,
         category: 'Fashion',
         location: 'Canteen Area',
-        imageUrl: 'https://loremflickr.com/640/480/jacket,denim?lock=13'
+        imageUrl: '/uploads/fashion_logo.png'
     },
 
-    // Stationery (Specific engineering tools)
+    // Stationery
     {
         title: 'Scientific Calculator Casio fx-991EX',
         description: 'Perfect for exams, all functions working. With cover.',
         price: 650,
         category: 'Stationery',
         location: 'Admin Block',
-        imageUrl: 'https://loremflickr.com/640/480/calculator,desk?lock=14'
+        imageUrl: '/uploads/stationery_logo.png'
     },
     {
         title: 'DS Class Notes',
@@ -143,7 +143,7 @@ const sampleItems = [
         price: 250,
         category: 'Stationery',
         location: 'Stationary Shop',
-        imageUrl: 'https://loremflickr.com/640/480/notebook,spiral?lock=15'
+        imageUrl: '/uploads/stationery_logo.png'
     },
     {
         title: 'Parker Pen Set',
@@ -151,7 +151,7 @@ const sampleItems = [
         price: 380,
         category: 'Stationery',
         location: 'Library',
-        imageUrl: 'https://loremflickr.com/640/480/pen,luxury?lock=16'
+        imageUrl: '/uploads/stationery_logo.png'
     },
     {
         title: 'Engineering Drawing Set',
@@ -159,17 +159,17 @@ const sampleItems = [
         price: 420,
         category: 'Stationery',
         location: 'Mechanical Block',
-        imageUrl: 'https://loremflickr.com/640/480/engineering,tools?lock=17'
+        imageUrl: '/uploads/stationery_logo.png'
     },
 
-    // Furniture (Dorm room items)
+    // Furniture
     {
         title: 'Study Table with Chair',
         description: 'Wooden study table + revolving chair. Perfect for hostel room.',
         price: 2500,
         category: 'Furniture',
         location: 'Hostel room',
-        imageUrl: 'https://loremflickr.com/640/480/desk,study?lock=18'
+        imageUrl: '/uploads/furniture_logo.png'
     },
     {
         title: 'Book Shelf - 4 Tier',
@@ -177,7 +177,7 @@ const sampleItems = [
         price: 1200,
         category: 'Furniture',
         location: 'Hostel 2',
-        imageUrl: 'https://loremflickr.com/640/480/bookshelf,furniture?lock=19'
+        imageUrl: '/uploads/furniture_logo.png'
     },
     {
         title: 'Mattress Single Bed',
@@ -185,7 +185,7 @@ const sampleItems = [
         price: 1800,
         category: 'Furniture',
         location: 'Hostel Market',
-        imageUrl: 'https://loremflickr.com/640/480/mattress,messy?lock=20'
+        imageUrl: '/uploads/furniture_logo.png'
     },
     {
         title: 'Wall Clock Digital',
@@ -193,17 +193,17 @@ const sampleItems = [
         price: 350,
         category: 'Furniture',
         location: 'Hostel 1',
-        imageUrl: 'https://loremflickr.com/640/480/clock,digital?lock=21'
+        imageUrl: '/uploads/furniture_logo.png'
     },
 
-    // Other / Misc (Student hobbies)
+    // General
     {
         title: 'Guitar - Yamaha F280',
         description: 'Acoustic guitar in excellent condition. Comes with bag and picks.',
         price: 6500,
         category: 'General',
         location: 'Music Room',
-        imageUrl: 'https://loremflickr.com/640/480/guitar,acoustic?lock=22'
+        imageUrl: '/uploads/general_logo.png'
     },
     {
         title: 'Badminton Racket Yonex',
@@ -211,7 +211,7 @@ const sampleItems = [
         price: 1100,
         category: 'General',
         location: 'Sports Complex',
-        imageUrl: 'https://loremflickr.com/640/480/shuttlecock,racket?lock=44'
+        imageUrl: '/uploads/general_logo.png'
     },
     {
         title: 'Cycle - Hero Sprint',
@@ -219,7 +219,7 @@ const sampleItems = [
         price: 4200,
         category: 'General',
         location: 'Cycle Stand',
-        imageUrl: 'https://loremflickr.com/640/480/bicycle,sport?lock=24'
+        imageUrl: '/uploads/general_logo.png'
     },
     {
         title: 'Water Bottle Milton 1L',
@@ -227,7 +227,7 @@ const sampleItems = [
         price: 280,
         category: 'General',
         location: 'BMSETH Mess',
-        imageUrl: 'https://media-uk.landmarkshops.in/cdn-cgi/image/h=550,w=550,q=85,fit=cover/homecentre/1000012541085-1000012541084_01-2100.jpg'
+        imageUrl: '/uploads/general_logo.png'
     }
 ];
 
@@ -239,7 +239,7 @@ async function seedDatabase() {
 
         console.log('\n📝 Ensuring users exist...');
         const createdUsers = [];
-        const passwordHash = bcrypt.hashSync('password123', 10);
+        const passwordHash = bcrypt.hashSync('Password@123', 10);
 
         for (const userData of sampleUsers) {
             let user = await User.findOne({ email: userData.email.toLowerCase() });
@@ -254,7 +254,10 @@ async function seedDatabase() {
                 await user.save();
                 console.log(`   ✅ Created User: ${userData.name}`);
             } else {
-                console.log(`   ⏭️  User ${userData.name} already exists`);
+                // Update password for existing users to match new requirements
+                user.passwordHash = passwordHash;
+                await user.save();
+                console.log(`   🔄 Updated password for: ${userData.name}`);
             }
             createdUsers.push(user);
         }
